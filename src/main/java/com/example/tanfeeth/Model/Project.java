@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,19 +15,30 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@Table(name = "project")
 public class Project {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
+    private String category;
+    private String location;
+    private String description;
+    private Date startDate;
+    private Date endDate;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "operation_company_id",referencedColumnName = "my_user_id")
     private OperationCompany operationCompany;
+
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "in_need_company_id",referencedColumnName = "my_user_id")
     private InNeedCompany inNeedCompany;
+
+
     @OneToMany(mappedBy = "project",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Staff> staffs;

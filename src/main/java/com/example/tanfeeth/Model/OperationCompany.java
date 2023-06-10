@@ -14,13 +14,29 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@Table(name = "operation_company")
 public class OperationCompany {
     @Id
     private Integer id;
+    private String name;
+    // check type
+    private String experience;
+    private Double rate;
+
+
+
+
+
+
+
+
     @OneToOne
     @MapsId
     @JsonIgnore
     private MyUser myUser;
+
+
+
     @OneToMany(mappedBy = "operationCompany",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Request> requestSet;
@@ -28,6 +44,8 @@ public class OperationCompany {
     @OneToMany(mappedBy = "operationCompany",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Project> projectSet;
+
+
     @OneToMany(mappedBy = "operationCompany",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Staff> staffSet;
