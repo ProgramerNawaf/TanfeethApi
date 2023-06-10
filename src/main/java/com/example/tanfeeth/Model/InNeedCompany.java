@@ -15,12 +15,13 @@ import java.util.Set;
 @Getter
 @RequiredArgsConstructor
 public class InNeedCompany {
+
     @Id
     private Integer id;
     @OneToOne
     @MapsId
     @JsonIgnore
-    private MyUser inNeedUser;
+    private MyUser myUser;
 
     @OneToMany(mappedBy = "inNeedCompany",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn

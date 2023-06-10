@@ -21,7 +21,7 @@ public class Staff {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "operation_company_id",referencedColumnName = "id")
+    @JoinColumn(name = "operation_company_id",referencedColumnName = "my_user_id")
     private OperationCompany operationCompany;
     @ManyToOne
     @JsonIgnore

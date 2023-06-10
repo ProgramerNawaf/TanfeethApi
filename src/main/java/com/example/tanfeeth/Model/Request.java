@@ -19,10 +19,10 @@ public class Request {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "operation_company_id",referencedColumnName = "id")
+    @JoinColumn(name = "operation_company_id",referencedColumnName = "my_user_id")
     private OperationCompany operationCompany;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "in_need_company_id",referencedColumnName = "id")
+    @JoinColumn(name = "in_need_company_id",referencedColumnName = "my_user_id")
     private InNeedCompany inNeedCompany;
 }

@@ -20,7 +20,7 @@ public class OperationCompany {
     @OneToOne
     @MapsId
     @JsonIgnore
-    private MyUser operationUser;
+    private MyUser myUser;
     @OneToMany(mappedBy = "operationCompany",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Request> requestSet;
