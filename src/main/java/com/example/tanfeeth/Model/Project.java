@@ -17,15 +17,15 @@ import java.util.Set;
 public class Project {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "operation_company_id",referencedColumnName = "id")
+    @JoinColumn(name = "operation_company_id",referencedColumnName = "my_user_id")
     private OperationCompany operationCompany;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "in_need_company_id",referencedColumnName = "id")
+    @JoinColumn(name = "in_need_company_id",referencedColumnName = "my_user_id")
     private InNeedCompany inNeedCompany;
     @OneToMany(mappedBy = "project",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
