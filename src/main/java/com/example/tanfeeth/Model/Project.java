@@ -26,6 +26,7 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
+    private String status;
 
     @ManyToOne
     @JsonIgnore

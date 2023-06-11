@@ -19,16 +19,15 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "user")
 public class MyUser implements UserDetails {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull(message = "username cant be null!")
-    private String username;
+    @NotNull(message = "email cant be null!")
+    private String email;
     @NotNull(message = "password cant be null!")
     private String password;
-    private String email;
+
     private String phoneNumber;
     @Column(columnDefinition = "varchar(25) not null check (role='ADMIN' or role='OPERATION' or role='INNEED')")
 //    @NotNull(message = "role cant be null!")
@@ -49,6 +48,11 @@ public class MyUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

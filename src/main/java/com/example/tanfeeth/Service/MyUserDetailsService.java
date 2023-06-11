@@ -16,11 +16,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private final MyUserRepositroy myUserRepositroy;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyUser user=myUserRepositroy.findMyUsersByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        MyUser user=myUserRepositroy.findMyUserByEmail(email);
 
         if(user==null){
-            throw new UsernameNotFoundException("Wrong username or password");
+            throw new UsernameNotFoundException("Wrong email or password");
         }
 
         return user;

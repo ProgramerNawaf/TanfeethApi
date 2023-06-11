@@ -24,7 +24,7 @@ public class MyUserService {
     public void registerInNeedCompany(RegisterInNeedCompanyDTO InNeedCompany){
         String hash = new BCryptPasswordEncoder().encode(InNeedCompany.getPassword());
         InNeedCompany.setPassword(hash);
-        MyUser user = new MyUser(null, InNeedCompany.getUsername(), InNeedCompany.getPassword(), InNeedCompany.getEmail(), InNeedCompany.getPhoneNumber(),"INNEED", null,null);
+        MyUser user = new MyUser(null, InNeedCompany.getEmail(), InNeedCompany.getPassword(), InNeedCompany.getPhoneNumber(),"INNEED", null,null);
         InNeedCompany inNeedCompany = new InNeedCompany(null, InNeedCompany.getName(), InNeedCompany.getCategory(), user,null,null);
         MyUserRepositroy.save(user);
         inNeedCompanyRepository.save(inNeedCompany);
