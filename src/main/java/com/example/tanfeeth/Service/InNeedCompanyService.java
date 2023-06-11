@@ -1,25 +1,31 @@
 package com.example.tanfeeth.Service;
 
+
 import com.example.tanfeeth.Model.MyUser;
+import com.example.tanfeeth.Repository.InNeedCompanyRepository;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class AuthService {
-    private final MyUserRepositroy MyUserRepositroy;
+public class InNeedCompanyService {
 
-    public List<MyUser> get(){
-        return MyUserRepositroy.findAll();
-    }
+
+    private final InNeedCompanyRepository inNeedCompanyRepository;
+    private final MyUserRepositroy myUserRepositroy;
+
+
+    // param --> DTO have all details
     public void register(MyUser usr){
         String hash = new BCryptPasswordEncoder().encode(usr.getPassword());
         usr.setPassword(hash);
 //        usr.setRole("CUSTOMER");
-        MyUserRepositroy.save(usr);
+        myUserRepositroy.save(usr);
+//        InNeedCompany inNeedCompany = new InNeedCompany(null,usr,null,null)
+//       inNeedCompanyRepository.save();
     }
+
+
 }

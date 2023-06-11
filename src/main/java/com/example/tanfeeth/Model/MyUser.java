@@ -19,6 +19,7 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@Table(name = "user")
 public class MyUser implements UserDetails {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +28,20 @@ public class MyUser implements UserDetails {
     private String username;
     @NotNull(message = "password cant be null!")
     private String password;
+    private String email;
+    private String phoneNumber;
     @Column(columnDefinition = "varchar(25) not null check (role='ADMIN' or role='OPERATION' or role='INNEED')")
-    @NotNull(message = "role cant be null!")
+//    @NotNull(message = "role cant be null!")
     private String role;
+
+
+
     @OneToOne(mappedBy = "myUser",cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private OperationCompany operationCompany;
+
+
+
     @OneToOne(mappedBy = "myUser",cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private InNeedCompany inNeedCompany;
