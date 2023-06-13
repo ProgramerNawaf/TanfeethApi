@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface MyUserRepositroy extends JpaRepository<MyUser,Integer> {
 
     MyUser findMyUserByEmail(String email);
+    MyUser findMyUsersById(Integer id);
 }

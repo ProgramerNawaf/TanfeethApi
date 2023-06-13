@@ -32,11 +32,16 @@ public class MyUserService {
 
     }
     // DTO register in operation
-    public void OperationCompany(MyUser OperationCompany){
+    public void registerOperationCompany(MyUser OperationCompany){
         String hash = new BCryptPasswordEncoder().encode(OperationCompany.getPassword());
         OperationCompany.setPassword(hash);
         OperationCompany.setRole("OPERATION");
         MyUserRepositroy.save(OperationCompany);
+    }
+
+    public void deleteUser(Integer id){
+        MyUser user = MyUserRepositroy.findMyUsersById(id);
+        MyUserRepositroy.delete(user);
     }
 
 

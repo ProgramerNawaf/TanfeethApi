@@ -33,6 +33,8 @@ public class MyUser implements UserDetails {
 //    @NotNull(message = "role cant be null!")
     private String role;
 
+    private String status;
+
 
 
     @OneToOne(mappedBy = "myUser",cascade = CascadeType.ALL)
