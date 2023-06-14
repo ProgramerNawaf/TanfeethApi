@@ -4,6 +4,7 @@ package com.example.tanfeeth.Service;
 import com.example.tanfeeth.DTO.InNeedCompanyDTO;
 import com.example.tanfeeth.Model.InNeedCompany;
 import com.example.tanfeeth.Model.MyUser;
+import com.example.tanfeeth.Model.OperationCompany;
 import com.example.tanfeeth.Repository.InNeedCompanyRepository;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,13 @@ public class InNeedCompanyService {
 
     // add -> register in myUserService
     //update Email
-    public void updateCompanyEmail(Integer idNC,InNeedCompanyDTO inNeedCompanyDTO){
+    public void updateInNeedCompany(Integer idNC,InNeedCompanyDTO inNeedCompanyDTO){
         MyUser myUser = myUserRepositroy.findMyUsersById(idNC);
         myUser.setEmail(inNeedCompanyDTO.getEmail());
-        myUserRepositroy.save(myUser);
-    }
-    public void deleteCompanyPassword(Integer idNC , InNeedCompanyDTO inNeedCompanyDTO){
-
+        myUser.setPassword(inNeedCompanyDTO.getPassword());
+        myUser.setPhoneNumber(inNeedCompanyDTO.getPhoneNumber());
+        InNeedCompany inNeedCompany = inNeedCompanyRepository.findInNeedCompanyById(idNC);
+//        inNeedCompany.set
     }
 
 
