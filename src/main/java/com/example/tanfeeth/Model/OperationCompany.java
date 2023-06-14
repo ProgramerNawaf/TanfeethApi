@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,14 +16,21 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "operation_company")
+
 public class OperationCompany {
     @Id
     private Integer id;
     private String name;
     // check type
-    private String experience;
     private Double rate;
+    private String experience;
+    private String workPermit;
+    private String commerecePermit;
+//    @Basic
+//    private List<> serviceList;
+    private String field;
+
+
 
 
 

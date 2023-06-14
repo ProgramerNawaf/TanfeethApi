@@ -27,12 +27,11 @@ public class MyUser implements UserDetails {
     private String email;
     @NotNull(message = "password cant be null!")
     private String password;
-
     private String phoneNumber;
     @Column(columnDefinition = "varchar(25) not null check (role='ADMIN' or role='OPERATION' or role='INNEED')")
 //    @NotNull(message = "role cant be null!")
     private String role;
-
+    // تحديد حالات الحساب
     private String status;
 
 

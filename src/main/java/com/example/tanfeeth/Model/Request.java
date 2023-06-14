@@ -14,14 +14,16 @@ import java.util.Date;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "request")
+
 public class Request {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     private Double offer;
     private String status;
-    private Date dateReceived;
+//    private Object createdBy;
+//    private Object updatedBy;
+    private Date createdAt;
 
     @ManyToOne
     @JsonIgnore
