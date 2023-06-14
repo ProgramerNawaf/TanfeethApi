@@ -2,6 +2,7 @@ package com.example.tanfeeth.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,16 +25,26 @@ public class MyUser implements UserDetails {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull(message = "email cant be null!")
+
+    @Column(columnDefinition = "varchar(20) not null unique")
+    @NotNull(message = "Email can't be null!")
+    @Email
     private String email;
-    @NotNull(message = "password cant be null!")
+
+    @Column(columnDefinition = "varchar(20) not null")
+    @NotNull(message = "Password can't be null!")
     private String password;
+
+    @Column(columnDefinition = "varchar(20) unique")
+    @NotNull(message = "Phone number can't be null!")
     private String phoneNumber;
+
     @Column(columnDefinition = "varchar(25) not null check (role='ADMIN' or role='OPERATION' or role='INNEED')")
 //    @NotNull(message = "role cant be null!")
     private String role;
     // تحديد حالات الحساب
-    private String status;
+
+
 
 
 
@@ -79,4 +90,5 @@ public class MyUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    //locking an account
 }

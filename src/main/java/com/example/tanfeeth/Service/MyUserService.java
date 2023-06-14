@@ -32,7 +32,6 @@ public class MyUserService {
                 hash,
                 inNeedCompanyDTO.getPhoneNumber(),
                 "INNEED",
-                "كتابة الحالة هنا بعد تحديدها في المودل",
                 null,
                 null);
         InNeedCompany inNeedCompany = new InNeedCompany(
@@ -56,7 +55,7 @@ public class MyUserService {
                 hash,
                 operationCompanyDTO.getPhoneNumber(),
                 "OPERATION",
-                "كتابة الحالة هنا بعد تحديدها في المودل",
+
                 null,
                 null
         );
@@ -66,6 +65,7 @@ public class MyUserService {
 
                 operationCompanyDTO.getWorkPermit(),
                 operationCompanyDTO.getCommerecePermit(),
+                operationCompanyDTO.getClassifacation(),
                 operationCompanyDTO.getServiceList(),
                 operationCompanyDTO.getField(),
                 userOperationCompany,

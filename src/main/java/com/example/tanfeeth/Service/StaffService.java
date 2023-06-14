@@ -45,7 +45,7 @@ public class StaffService {
         MyUser user = myUserRepositroy.findMyUsersById(idOC);
         Staff staff = staffRepository.findStaffById(idStaff);
         if (staff == null || staff.getOperationCompany().getId()!= user.getId()){
-            throw new ApiException("do not have any staff for this id");
+            throw new ApiException("Staff with this ID dosen't exist!");
         }
         staff.setAge(newStaff.getAge());
         staff.setName(newStaff.getName());
@@ -61,7 +61,7 @@ public class StaffService {
         MyUser user = myUserRepositroy.findMyUsersById(idOC);
         Staff staff = staffRepository.findStaffById(idStaff);
         if (staff == null || staff.getOperationCompany().getId()!= user.getId()){
-            throw new ApiException("do not have any staff for this id");
+            throw new ApiException("\"Staff with this ID dosen't exist!\"");
         }
         staff.setOperationCompany(null);
         user.getOperationCompany().getStaffSet().remove(staff);
