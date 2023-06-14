@@ -14,4 +14,6 @@ public interface StaffRepository extends JpaRepository<Staff,Integer> {
     Staff findStaffById(Integer idStaff);
     List<Staff> findStaffByOperationCompany(OperationCompany operationCompany);
 
+
+
 }

@@ -21,12 +21,12 @@ public class MyUserController {
     @PostMapping("/register/in-need-company")
     public ResponseEntity registerInNeedCompany(@Valid @RequestBody InNeedCompanyDTO inNeedCompany) {
         myUserService.registerInNeedCompany(inNeedCompany);
-        return ResponseEntity.status(200).body("registered InNeed company!");
+        return ResponseEntity.status(200).body("registered InNeed Company!");
     }
     @PostMapping("/register/operation-company")
     public ResponseEntity registerOperationCompany(@Valid @RequestBody OperationCompanyDTO operationCompany) {
         myUserService.registerOperationCompany(operationCompany);
-        return ResponseEntity.status(200).body("registered OperationCompany");
+        return ResponseEntity.status(200).body("registered Operation Company");
     }
 
     @GetMapping("/get")
