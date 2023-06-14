@@ -23,11 +23,12 @@ public class OperationCompany {
     private String name;
     // check type
     private Double rate;
-    private String experience;
     private String workPermit;
     private String commerecePermit;
+//    private String classifacation;
 //    @Basic
-//    private List<> serviceList;
+    @ElementCollection
+    private List<String> serviceList;
     private String field;
 
 

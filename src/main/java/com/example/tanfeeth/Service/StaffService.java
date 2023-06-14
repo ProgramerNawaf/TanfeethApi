@@ -36,6 +36,7 @@ public class StaffService {
                 staff.getStatus(),
                 operationCompany,
                 null);
+        operationCompany.getStaffSet().add(staff1);
         staffRepository.save(staff1);
 
     }

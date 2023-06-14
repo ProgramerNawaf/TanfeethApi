@@ -3,6 +3,8 @@ package com.example.tanfeeth.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Data
 public class OperationCompanyDTO {
@@ -17,7 +19,7 @@ public class OperationCompanyDTO {
     private String workPermit;
     private String commerecePermit;
     //    @Basic
-//    private List<> serviceList;
+    private List<String> serviceList;
     private String field;
 
 
