@@ -63,9 +63,10 @@ public class MyUserService {
         OperationCompany operationCompany = new OperationCompany(userOperationCompany.getId(),
                 operationCompanyDTO.getName(),
                 0.0,
-                operationCompanyDTO.getExperience(),
+
                 operationCompanyDTO.getWorkPermit(),
                 operationCompanyDTO.getCommerecePermit(),
+                operationCompanyDTO.getServiceList(),
                 operationCompanyDTO.getField(),
                 userOperationCompany,
                 null,

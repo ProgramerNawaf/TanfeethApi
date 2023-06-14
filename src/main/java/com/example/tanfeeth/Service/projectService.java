@@ -44,26 +44,18 @@ public class projectService {
         if(user == null)
             new ApiException("Company dosen't exist!");
         //تحديد نوع الشركة
-        if(user.getInNeedCompany() != null){
-            user.getInNeedCompany().getProjectSet().add(p);
-            inNeedCompanyRepository.save(user.getInNeedCompany());
-        }else{
            user.getOperationCompany().getProjectSet().add(p);
            operationCompanyRepository.save(user.getOperationCompany());
-        }
+
     }
     public void deleteProject(Project p , Integer id){
         Project project =projectRepository.findProjectById(id);
         if(project == null)
             new ApiException("Project dosen't exist!");
-        //تحديد نوع الشركة
-        if(project.getInNeedCompany() != null){
-            project.setInNeedCompany(null);
-            projectRepository.save(project);
-        }else{
+
             project.setOperationCompany(null);
             projectRepository.save(project);
-        }
+
     }
 
 
