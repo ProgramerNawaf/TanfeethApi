@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class projectService {
+public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final MyUserRepositroy myUserRepositroy;
@@ -44,8 +44,8 @@ public class projectService {
         if(user == null)
             new ApiException("Company dosen't exist!");
         //تحديد نوع الشركة
-           user.getOperationCompany().getProjectSet().add(p);
-           operationCompanyRepository.save(user.getOperationCompany());
+           user.getInNeedCompany().getProjectSet().add(p);
+           inNeedCompanyRepository.save(user.getInNeedCompany());
 
     }
     public void deleteProject(Project p , Integer id){

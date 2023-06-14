@@ -41,10 +41,10 @@ public class StaffController {
         return ResponseEntity.status(200).body("Staff deleted!");
     }
 
-    @GetMapping("/getExpired/{idOC}")
-    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user, @PathVariable Integer idOC){
+    @GetMapping("/getExpired")
+    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user){
 
-        return ResponseEntity.status(200).body(staffService.getStaffExipredIdentity(idOC));
+        return ResponseEntity.status(200).body(staffService.getStaffExipredIdentity(user.getId()));
     }
 
     @GetMapping("/assignProject/{idOC}/{projectId}")
