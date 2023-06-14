@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "project")
+
 public class Project {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

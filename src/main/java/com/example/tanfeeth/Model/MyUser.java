@@ -1,5 +1,6 @@
 package com.example.tanfeeth.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,12 +28,11 @@ public class MyUser implements UserDetails {
     private String email;
     @NotNull(message = "password cant be null!")
     private String password;
-
     private String phoneNumber;
     @Column(columnDefinition = "varchar(25) not null check (role='ADMIN' or role='OPERATION' or role='INNEED')")
 //    @NotNull(message = "role cant be null!")
     private String role;
-
+    // تحديد حالات الحساب
     private String status;
 
 
@@ -47,31 +47,34 @@ public class MyUser implements UserDetails {
     @PrimaryKeyJoinColumn
     private InNeedCompany inNeedCompany;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

@@ -14,13 +14,16 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "in_need_company")
+
 public class InNeedCompany {
 
     @Id
     private Integer id;
     private String name;
-    private String category;
+    private String commerecePermit;
+    private String workPermit;
+
+
 
 
 

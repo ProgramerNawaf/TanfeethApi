@@ -15,16 +15,17 @@ import java.util.Set;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@Table(name = "staff")
 public class Staff {
         @jakarta.persistence.Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer Id;
         private String name;
         private Integer age;
+        private String gender;
         private String field;
         private String nationality;
-        private Date expiryDateIQAMA;
+        private String identifier;
+        private String status;
 
     @ManyToOne
     @JsonIgnore
