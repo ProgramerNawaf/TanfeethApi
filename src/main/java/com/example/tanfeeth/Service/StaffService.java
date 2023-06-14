@@ -26,10 +26,19 @@ public class StaffService {
        return user.getOperationCompany().getStaffSet();
     }
     public void addStaff(Integer idOC,Staff staff){
-        MyUser user = myUserRepositroy.findMyUsersById(idOC);
-        user.getOperationCompany().getStaffSet().add(staff);
-        operationCompanyRepository.save(user.getOperationCompany());
-        staffRepository.save(staff);
+        OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
+        Staff staff1 = new Staff(null,
+                staff.getName(),
+                staff.getAge(),staff.getGender(),
+                staff.getField(),
+                staff.getNationality(),
+                staff.getIdentifier(),
+                staff.getStatus(),
+                operationCompany,
+                null);
+        operationCompany.getStaffSet().add(staff1);
+        staffRepository.save(staff1);
+
     }
 
     public void updateStaff(Integer idOC,Integer idStaff,Staff newStaff){

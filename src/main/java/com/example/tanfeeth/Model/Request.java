@@ -21,8 +21,8 @@ public class Request {
     private Integer Id;
     private Double offer;
     private String status;
-//    private Object createdBy;
-//    private Object updatedBy;
+    private Integer createdBy;
+    private  Integer updatedBy;
     private Date createdAt;
 
     @ManyToOne

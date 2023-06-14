@@ -7,10 +7,9 @@ import com.example.tanfeeth.Service.MyUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/v1/account")
 @RequiredArgsConstructor
@@ -28,6 +27,11 @@ public class MyUserController {
     public ResponseEntity registerOperationCompany(@Valid @RequestBody OperationCompanyDTO operationCompany) {
         myUserService.registerOperationCompany(operationCompany);
         return ResponseEntity.status(200).body("registered OperationCompany");
+    }
+
+    @GetMapping("/get")
+    public List<MyUser> getAll() {
+        return myUserService.get();
     }
 
 
