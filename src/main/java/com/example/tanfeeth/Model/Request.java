@@ -21,7 +21,7 @@ public class Request {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    @Column(columnDefinition = "Double not null")
+
     @NotNull(message = "Offer can't be null!")
     private Double offer;
     @Column(columnDefinition = "varchar(20) not null")

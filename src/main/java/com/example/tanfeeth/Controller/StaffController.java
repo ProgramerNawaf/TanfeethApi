@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api/v1/staff")
 @RequiredArgsConstructor
@@ -25,19 +26,31 @@ public class StaffController {
     @PostMapping("/add")
     public ResponseEntity addStaff(@AuthenticationPrincipal MyUser user,@RequestBody Staff staff){
         staffService.addStaff(user.getId(),staff);
-        return ResponseEntity.status(200).body("done add staff");
+        return ResponseEntity.status(200).body("Staff Added!");
     }
 
     @PutMapping("/update-staff/{idStaff}")
     public ResponseEntity updateStaff(@AuthenticationPrincipal MyUser user,@PathVariable Integer idStaff,@RequestBody Staff staff){
         staffService.updateStaff(user.getId(),idStaff,staff);
-        return ResponseEntity.status(200).body("done update");
+        return ResponseEntity.status(200).body("Staff updated!");
     }
 
     @DeleteMapping("/delete/{idStaff}")
     public ResponseEntity deleteStaff(@AuthenticationPrincipal MyUser user,@PathVariable Integer idStaff){
         staffService.deleteStaff(user.getId(), idStaff);
-        return ResponseEntity.status(200).body("done deleted");
+        return ResponseEntity.status(200).body("Staff deleted!");
+    }
+
+    @GetMapping("/getExpired/{idOC}")
+    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user, @PathVariable Integer idOC){
+
+        return ResponseEntity.status(200).body(staffService.getStaffExipredIdentity(idOC));
+    }
+
+    @GetMapping("/assignProject/{idOC}/{projectId}")
+    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user, @RequestBody List <Integer> staffIds , @PathVariable Integer idOC, @PathVariable Integer projectId){
+        staffService.assignStaffToProject(idOC,projectId,staffIds);
+        return ResponseEntity.status(200).body("Staff assigned!");
     }
 
 

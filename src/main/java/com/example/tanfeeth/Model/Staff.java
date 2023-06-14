@@ -47,7 +47,7 @@ public class Staff {
         @NotNull(message = "Identifier date can't be null!")
         private LocalDateTime identifier;
 
-        @Column(columnDefinition = "varchar(25) not null check (status='FREE' or role='WORKING' or role='VACATION')")
+        @Column(columnDefinition = "varchar(25) not null check (status='FREE' or status='WORKING' or status='VACATION' or status = 'EXPIRED IDENTITY')")
         @NotNull(message = "Status can't be null!")
         private String status;
 

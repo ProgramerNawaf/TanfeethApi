@@ -55,7 +55,6 @@ public class projectService {
 
             project.setOperationCompany(null);
             projectRepository.save(project);
-
     }
 
 
