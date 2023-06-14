@@ -21,9 +21,10 @@ public class StaffService {
     private final StaffRepository staffRepository;
     private final MyUserRepositroy myUserRepositroy;
     private final OperationCompanyRepository operationCompanyRepository;
-    public Set<Staff> getAllStaffForCompany(Integer idOC){
-       MyUser user = myUserRepositroy.findMyUsersById(idOC);
-       return user.getOperationCompany().getStaffSet();
+    public List<Staff> getAllStaffForCompany(Integer idOC){
+       OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
+       List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
+       return staffList;
     }
     public void addStaff(Integer idOC,Staff staff){
         OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
@@ -63,10 +64,6 @@ public class StaffService {
         if (staff == null || staff.getOperationCompany().getId()!= user.getId()){
             throw new ApiException("do not have any staff for this id");
         }
-        staff.setOperationCompany(null);
-        user.getOperationCompany().getStaffSet().remove(staff);
-        operationCompanyRepository.save(user.getOperationCompany());
-        staffRepository.save(staff);
         staffRepository.delete(staff);
     }
 
