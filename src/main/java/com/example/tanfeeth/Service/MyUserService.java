@@ -83,12 +83,21 @@ public class MyUserService {
         if (user.getInNeedCompany()==null){
             OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
-            List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
+            List<Staff> staffProject=null;
             for (int i= 0 ; i<projectList.size();i++){
                 projectList.get(i).setOperationCompany(null);
-                staffList.get(i).setOperationCompany(null);
-                staffRepository.delete(staffList.get(i));
-
+                staffProject = staffRepository.findStaffByProject(projectList.get(i));
+                for (int j = 0 ;j<staffProject.size();j++){
+                    staffProject.get(j).setProject(null);
+                    staffProject.get(j).setOperationCompany(null);
+                    staffRepository.delete(staffProject.get(j));
+                }
+            }
+            List<Staff> staffAll = staffRepository.findStaffByOperationCompany(operationCompany);
+            for (int j = 0 ;j<staffAll.size();j++){
+                staffAll.get(j).setProject(null);
+                staffAll.get(j).setOperationCompany(null);
+                staffRepository.delete(staffAll.get(j));
             }
             operationCompanyRepository.delete(operationCompany);
             myUserRepositroy.delete(user);
@@ -100,10 +109,10 @@ public class MyUserService {
             for (int i= 0;i<projectList.size();i++){
                 projectList.get(i).setInNeedCompany(null);
                 staffList = staffRepository.findStaffByProject(projectList.get(i));
-                for (int j = 0 ;j<staffList.size();i++){
-                    staffList.get(i).setProject(null);
-                    staffList.get(i).setStatus("FREE");
-                    staffRepository.save(staffList.get(i));
+                for (int j = 0 ;j<staffList.size();j++){
+                    staffList.get(j).setProject(null);
+                    staffList.get(j).setStatus("FREE");
+                    staffRepository.save(staffList.get(j));
                 }
                 projectRepository.delete(projectList.get(i));
             }
