@@ -12,6 +12,8 @@ import com.example.tanfeeth.Repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +34,14 @@ public class ProjectService {
         MyUser user =myUserRepositroy.findMyUsersById(companyId);
         if(user == null)
             new ApiException("Company dosen't exist!");
-        if(user.getInNeedCompany() == null)
+        if(user.getInNeedCompany() == null){
+            changeStatusForProjectToDelayed(companyId);
             return user.getOperationCompany().getProjectSet();
-        else
+        }
+        else{
+            changeStatusForProjectToDelayed(companyId);
             return user.getInNeedCompany().getProjectSet();
+        }
     }
 
     public Set<Project> getProjectsByCompanyId(Integer id){
@@ -73,6 +79,33 @@ public class ProjectService {
             throw new ApiException("Can't delete this project is assigned to "+project.getOperationCompany().getName()+" !");
             projectRepository.delete(project);
     }
+
+    public void changeStatusForProjectToDelayed(Integer idInNeed){
+        MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
+        InNeedCompany inNeedCompany = user.getInNeedCompany();
+        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        for (int i =0 ; i<project.size();i++){
+            if (project.get(i).getEndDate().isAfter(LocalDateTime.now())&& !(project.get(i).getStatus().equalsIgnoreCase("FINISHED"))){
+                project.get(i).setStatus("DELAYED");
+                projectRepository.save(project.get(i));
+            }
+        }
+    }
+
+    public List<Project> getAllDelayedProject(Integer idInNeed){
+        MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
+        InNeedCompany inNeedCompany = user.getInNeedCompany();
+        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        List<Project> projectDELAYED = new ArrayList<>();
+        for (int i =0 ; i<project.size();i++){
+            if (project.get(i).getStatus().equalsIgnoreCase("DELAYED")){
+                projectDELAYED.add(project.get(i));
+            }
+        }
+        return projectDELAYED;
+    }
+
+
 
 
 }
