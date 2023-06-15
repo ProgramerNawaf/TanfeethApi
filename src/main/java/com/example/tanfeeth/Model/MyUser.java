@@ -31,7 +31,7 @@ public class MyUser implements UserDetails {
     @Email
     private String email;
 
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(255) not null")
     @NotNull(message = "Password can't be null!")
     private String password;
 
