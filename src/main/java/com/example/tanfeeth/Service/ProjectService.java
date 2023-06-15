@@ -27,13 +27,19 @@ public class ProjectService {
     }
 
     public Set<Project> getCompanyProject(Integer companyId){
-        MyUser user =myUserRepositroy.findMyUsersById(companyId);
+       MyUser user =myUserRepositroy.findMyUsersById(companyId);
         if(user == null)
             new ApiException("Company dosen't exist!");
-        if(user.getInNeedCompany() == null)
+ 
+        if(user.getInNeedCompany() == null){
+            changeStatusForProjectToDelayed(companyId);
             return user.getOperationCompany().getProjectSet();
         else
+        }
+        else{
+            changeStatusForProjectToDelayed(companyId);
             return user.getInNeedCompany().getProjectSet();
+        }
     }
 
     public Set<Project> getProjectsByCompanyId(Integer id){
@@ -87,6 +93,31 @@ public class ProjectService {
         }
         project.setStatus("FINISHED");
         projectRepository.save(project);
+    }
+
+    public void changeStatusForProjectToDelayed(Integer idInNeed){
+        MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
+        InNeedCompany inNeedCompany = user.getInNeedCompany();
+        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        for (int i =0 ; i<project.size();i++){
+            if (project.get(i).getEndDate().isAfter(LocalDateTime.now())&& !(project.get(i).getStatus().equalsIgnoreCase("FINISHED"))){
+                project.get(i).setStatus("DELAYED");
+                projectRepository.save(project.get(i));
+            }
+        }
+    }
+
+    public List<Project> getAllDelayedProject(Integer idInNeed){
+        MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
+        InNeedCompany inNeedCompany = user.getInNeedCompany();
+        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        List<Project> projectDELAYED = new ArrayList<>();
+        for (int i =0 ; i<project.size();i++){
+            if (project.get(i).getStatus().equalsIgnoreCase("DELAYED")){
+                projectDELAYED.add(project.get(i));
+            }
+        }
+        return projectDELAYED;
     }
 
 
