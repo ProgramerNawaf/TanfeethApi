@@ -41,20 +41,20 @@ public class StaffController {
         return ResponseEntity.status(200).body("Staff deleted!");
     }
 
-//    @GetMapping("/getExpired")
-//    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user){
-//        staffService.getStaffExipredIdentity(user.getId())
-//        return ResponseEntity.status(200).body();
-//    }
+    @GetMapping("/getExpired")
+    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user){
+        List<Staff> staffList = staffService.getAllStaffExpired(user.getId());
+        return ResponseEntity.status(200).body(staffList);
+    }
 
     @PutMapping("/assignProject/{projectId}")
-    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user, @RequestBody List <Integer> staffIds ,@PathVariable Integer projectId){
+    public ResponseEntity assignStaffToProject(@AuthenticationPrincipal MyUser user, @RequestBody List <Integer> staffIds ,@PathVariable Integer projectId){
         staffService.assignStaffToProject(user.getId(),projectId,staffIds);
         return ResponseEntity.status(200).body("Staff assigned!");
     }
 
     @PutMapping("/vacation/{staffId}")
-    public ResponseEntity getExpiredStaff(@AuthenticationPrincipal MyUser user, @PathVariable Integer staffId){
+    public ResponseEntity addVacation(@AuthenticationPrincipal MyUser user, @PathVariable Integer staffId){
         staffService.changeStatusVacation(user.getId(),staffId);
         return ResponseEntity.status(200).body("Staff is on vacation!");
     }

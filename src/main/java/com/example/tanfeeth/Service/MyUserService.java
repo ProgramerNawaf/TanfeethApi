@@ -23,7 +23,7 @@ public class MyUserService {
     public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
     }
-    // DTO register in need company
+
     public void registerInNeedCompany(InNeedCompanyDTO inNeedCompanyDTO){
         String hash = new BCryptPasswordEncoder().encode(inNeedCompanyDTO.getPassword());
         MyUser userInNeedCompany = new MyUser(

@@ -20,13 +20,12 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/get")
-    public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
-
+    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user){
         return ResponseEntity.status(200).body(projectService.getCompanyProjects(user.getId()));
     }
 
     @GetMapping("/get-project-company/{projectId}")
-    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user,@PathVariable Integer projectId){
+    public ResponseEntity getCompanyProjectsById(@AuthenticationPrincipal MyUser user,@PathVariable Integer projectId){
 
         return ResponseEntity.status(200).body(projectService.getProjectByCompanyId(user.getId(), projectId));
     }
@@ -48,6 +47,15 @@ public class ProjectController {
         projectService.finishProject(user.getId(),projectId);
         return ResponseEntity.status(200).body("Project Finished!");
     }
+
+    @GetMapping("/get-delayed")
+    public ResponseEntity getAllDelayedProject(@AuthenticationPrincipal MyUser myUser){
+        List<Project> projectList = projectService.getAllDelayedProject(myUser.getId());
+        return ResponseEntity.status(200).body(projectList);
+    }
+
+
+
 
 
 }
