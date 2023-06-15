@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -24,9 +25,9 @@ public class Request {
 
 
     private Double offer;
-    @Column(columnDefinition = "varchar(20) not null")
+   
     private String status;
-
+    @Column(columnDefinition = "varchar(20) not null")
     private String projectName;
 
     private Integer createdBy;
@@ -34,7 +35,7 @@ public class Request {
     private  Integer updatedBy;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JsonIgnore
@@ -46,4 +47,6 @@ public class Request {
     @JsonIgnore
     @JoinColumn(name = "in_need_company_id",referencedColumnName = "my_user_id")
     private InNeedCompany inNeedCompany;
+
+
 }
