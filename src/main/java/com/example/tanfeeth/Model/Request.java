@@ -22,11 +22,12 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
-    @NotNull(message = "Offer can't be null!")
+
     private Double offer;
     @Column(columnDefinition = "varchar(20) not null")
-    @NotNull(message = "Status can't be null!")
     private String status;
+
+    private String projectName;
 
     private Integer createdBy;
 
