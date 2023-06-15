@@ -49,7 +49,7 @@ public class SpringConfiguration {
                 .requestMatchers("/api/v1/account/get").permitAll()
                 .requestMatchers("/api/v1/auth/admin").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/project/get","/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
+                .requestMatchers(   "/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
                 //user access
                 .requestMatchers("/api/v1/auth/login").permitAll()
                 .anyRequest().authenticated()

@@ -5,10 +5,7 @@ import com.example.tanfeeth.Model.InNeedCompany;
 import com.example.tanfeeth.Model.MyUser;
 import com.example.tanfeeth.Model.Project;
 import com.example.tanfeeth.Model.Staff;
-import com.example.tanfeeth.Repository.InNeedCompanyRepository;
-import com.example.tanfeeth.Repository.MyUserRepositroy;
-import com.example.tanfeeth.Repository.OperationCompanyRepository;
-import com.example.tanfeeth.Repository.ProjectRepository;
+import com.example.tanfeeth.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,7 @@ public class ProjectService {
     private final MyUserRepositroy myUserRepositroy;
     private final OperationCompanyRepository operationCompanyRepository;
     private final InNeedCompanyRepository inNeedCompanyRepository;
+    private final StaffRepository staffRepository;
 
     public List<Project> getAll(){
         return projectRepository.findAll();
@@ -72,6 +70,23 @@ public class ProjectService {
         if(project.getOperationCompany()!=null)
             throw new ApiException("Can't delete this project is assigned to "+project.getOperationCompany().getName()+" !");
             projectRepository.delete(project);
+    }
+
+    public void finishProject(Integer idOC , Integer projectId){
+        MyUser user = myUserRepositroy.findMyUsersById(idOC);
+        Project project = projectRepository.findProjectById(projectId);
+        List <Staff> staff=staffRepository.findStaffByProject(project);
+        if(project == null)
+            throw new ApiException("Project with this ID dosen't exist!");
+        if(project.getOperationCompany().getId() != idOC)
+            throw new ApiException("Project is not assigned to this company!");
+
+        for(int i=0 ; i<staff.size();i++){
+            staff.get(i).setStatus("FREE");
+            staffRepository.save(staff.get(i));
+        }
+        project.setStatus("FINISHED");
+        projectRepository.save(project);
     }
 
 

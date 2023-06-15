@@ -43,5 +43,11 @@ public class ProjectController {
         return ResponseEntity.status(200).body("Project Deleted!");
     }
 
+    @PutMapping("/project-finish/{projectId}")
+    public ResponseEntity finishProject(@AuthenticationPrincipal MyUser user,@PathVariable Integer projectId){
+        projectService.finishProject(user.getId(),projectId);
+        return ResponseEntity.status(200).body("Project Finished!");
+    }
+
 
 }
