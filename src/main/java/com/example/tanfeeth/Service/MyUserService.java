@@ -2,18 +2,13 @@ package com.example.tanfeeth.Service;
 
 import com.example.tanfeeth.DTO.InNeedCompanyDTO;
 import com.example.tanfeeth.DTO.OperationCompanyDTO;
-import com.example.tanfeeth.Model.InNeedCompany;
-import com.example.tanfeeth.Model.MyUser;
-import com.example.tanfeeth.Model.OperationCompany;
-import com.example.tanfeeth.Model.Project;
-import com.example.tanfeeth.Repository.InNeedCompanyRepository;
-import com.example.tanfeeth.Repository.MyUserRepositroy;
-import com.example.tanfeeth.Repository.OperationCompanyRepository;
-import com.example.tanfeeth.Repository.ProjectRepository;
+import com.example.tanfeeth.Model.*;
+import com.example.tanfeeth.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +18,7 @@ public class MyUserService {
     private final InNeedCompanyRepository inNeedCompanyRepository;
     private final OperationCompanyRepository operationCompanyRepository;
     private final ProjectRepository projectRepository;
+    private final StaffRepository staffRepository;
 
     public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
@@ -87,8 +83,11 @@ public class MyUserService {
         if (user.getInNeedCompany()==null){
             OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
+            List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
             for (int i= 0 ; i<projectList.size();i++){
                 projectList.get(i).setOperationCompany(null);
+                staffList.get(i).setOperationCompany(null);
+                staffRepository.delete(staffList.get(i));
 
             }
             operationCompanyRepository.delete(operationCompany);
@@ -96,8 +95,16 @@ public class MyUserService {
         }else{
             InNeedCompany inNeedCompany = inNeedCompanyRepository.findInNeedCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+            List<Staff> staffList =null;
+
             for (int i= 0;i<projectList.size();i++){
                 projectList.get(i).setInNeedCompany(null);
+                staffList = staffRepository.findStaffByProject(projectList.get(i));
+                for (int j = 0 ;j<staffList.size();i++){
+                    staffList.get(i).setProject(null);
+                    staffList.get(i).setStatus("FREE");
+                    staffRepository.save(staffList.get(i));
+                }
                 projectRepository.delete(projectList.get(i));
             }
             inNeedCompanyRepository.delete(inNeedCompany);
