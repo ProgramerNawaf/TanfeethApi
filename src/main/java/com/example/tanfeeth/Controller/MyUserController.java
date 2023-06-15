@@ -42,6 +42,13 @@ public class MyUserController {
         return ResponseEntity.status(200).body("deleted User!");
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity logout(){
+        return ResponseEntity.status(200).body("logout");
+    }
+
+
+
 
 
 
