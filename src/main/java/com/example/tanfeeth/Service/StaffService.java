@@ -124,7 +124,6 @@ public class StaffService {
             throw new ApiException("Staff is not free!");
         staff.setStatus("VACATION");
         staffRepository.save(staff);
-
     }
 
 

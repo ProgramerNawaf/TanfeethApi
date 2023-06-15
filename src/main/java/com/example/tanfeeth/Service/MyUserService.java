@@ -5,9 +5,11 @@ import com.example.tanfeeth.DTO.OperationCompanyDTO;
 import com.example.tanfeeth.Model.InNeedCompany;
 import com.example.tanfeeth.Model.MyUser;
 import com.example.tanfeeth.Model.OperationCompany;
+import com.example.tanfeeth.Model.Project;
 import com.example.tanfeeth.Repository.InNeedCompanyRepository;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import com.example.tanfeeth.Repository.OperationCompanyRepository;
+import com.example.tanfeeth.Repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,9 @@ public class MyUserService {
     private final MyUserRepositroy myUserRepositroy;
     private final InNeedCompanyRepository inNeedCompanyRepository;
     private final OperationCompanyRepository operationCompanyRepository;
+    private final ProjectRepository projectRepository;
 
-    public List<MyUser> get(){
+    public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
     }
     // DTO register in need company
@@ -81,8 +84,26 @@ public class MyUserService {
 
     public void deleteUser(Integer id){
         MyUser user = myUserRepositroy.findMyUsersById(id);
-        myUserRepositroy.delete(user);
+        if (user.getInNeedCompany()==null){
+            OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(user.getId());
+            List<Project> projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
+            for (int i= 0 ; i<projectList.size();i++){
+                projectList.get(i).setOperationCompany(null);
 
+            }
+            operationCompanyRepository.delete(operationCompany);
+            myUserRepositroy.delete(user);
+        }else{
+            InNeedCompany inNeedCompany = inNeedCompanyRepository.findInNeedCompanyById(user.getId());
+            List<Project> projectList = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+            for (int i= 0;i<projectList.size();i++){
+                projectList.get(i).setInNeedCompany(null);
+                projectRepository.delete(projectList.get(i));
+            }
+            inNeedCompanyRepository.delete(inNeedCompany);
+            myUserRepositroy.delete(user);
+
+        }
     }
 
 
