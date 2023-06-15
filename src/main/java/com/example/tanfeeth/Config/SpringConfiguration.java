@@ -49,12 +49,15 @@ public class SpringConfiguration {
                 .requestMatchers("/api/v1/account/get").permitAll()
                 .requestMatchers("/api/v1/auth/admin").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/inneed-company/update-email").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/inneed-company/get").permitAll()//only admin
+
                 .requestMatchers(   "/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
                 //user access
                 .requestMatchers("/api/v1/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .logout().logoutUrl("/api/v1/auth/logout")
+                .logout().logoutUrl("/api/v1/account/logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
                 .and()
