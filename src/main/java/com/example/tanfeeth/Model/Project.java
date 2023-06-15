@@ -36,8 +36,8 @@ public class Project {
     @NotNull(message = "Location can't be null!")
     private String location;
 
-    @Column(columnDefinition = "varchar(20) not null")
-    @NotNull(message = "Desciption can't be null!")
+    @Column(columnDefinition = "varchar(100) not null")
+    @NotNull(message = "Description can't be null!")
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -47,7 +47,6 @@ public class Project {
     private LocalDateTime endDate;
 
     @Column(columnDefinition = "varchar(20) not null check (status='NEW' or status='ONGOING' or status='DELAYED' or status='FINISHED')")
-    @NotNull(message = "Status can't be null!")
     private String status;
 
     @ManyToOne

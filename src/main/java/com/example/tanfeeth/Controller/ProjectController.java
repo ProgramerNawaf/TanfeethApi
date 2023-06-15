@@ -25,10 +25,22 @@ public class ProjectController {
         return ResponseEntity.status(200).body(projectList);
     }
 
+    @GetMapping("/get-project-company")
+    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user){
+
+        return ResponseEntity.status(200).body(projectService.getCompanyProject(user.getId()));
+    }
+
     @PostMapping("/add")
     public ResponseEntity addProject(@AuthenticationPrincipal MyUser user,@RequestBody Project project){
         projectService.addProject(project,user.getId());
-        return ResponseEntity.status(200).body("done add project");
+        return ResponseEntity.status(200).body("Project Added!");
+    }
+
+    @DeleteMapping("/delete/{projectId}")
+    public ResponseEntity deleteProject(@AuthenticationPrincipal MyUser user,@PathVariable Integer projectId){
+        projectService.deleteProject(user.getId(),projectId);
+        return ResponseEntity.status(200).body("Project Deleted!");
     }
 
 

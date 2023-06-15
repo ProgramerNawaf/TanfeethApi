@@ -4,6 +4,7 @@ package com.example.tanfeeth.Service;
 import com.example.tanfeeth.ApiException.ApiException;
 import com.example.tanfeeth.Model.MyUser;
 import com.example.tanfeeth.Model.OperationCompany;
+import com.example.tanfeeth.Model.Project;
 import com.example.tanfeeth.Model.Staff;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import com.example.tanfeeth.Repository.OperationCompanyRepository;
@@ -25,31 +26,26 @@ public class StaffService {
     private final MyUserRepositroy myUserRepositroy;
     private final OperationCompanyRepository operationCompanyRepository;
     private final ProjectRepository projectRepository;
-    public List<Staff> getAllStaffForCompany(Integer idOC){
-       OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
-       List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
-       return staffList;
-    }
-    public void addStaff(Integer idOC,Staff staff){
+
+    public List<Staff> getAllStaffForCompany(Integer idOC) {
         OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
-        Staff staff1 = new Staff(null,
-                staff.getName(),
-                staff.getAge(),staff.getGender(),
-                staff.getField(),
-                staff.getNationality(),
-                staff.getIdentifier(),
-                staff.getStatus(),
-                operationCompany,
-                null);
-        operationCompany.getStaffSet().add(staff1);
-        staffRepository.save(staff1);
+        changeStaffToExpiredIdentity(idOC);
+        List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
+        return staffList;
+    }
+
+    public void addStaff(Integer idOC, Staff staff) {
+        OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
+        staff.setOperationCompany(operationCompany);
+        operationCompany.getStaffSet().add(staff);
+        staffRepository.save(staff);
 
     }
 
-    public void updateStaff(Integer idOC,Integer idStaff,Staff newStaff){
+    public void updateStaff(Integer idOC, Integer idStaff, Staff newStaff) {
         MyUser user = myUserRepositroy.findMyUsersById(idOC);
         Staff staff = staffRepository.findStaffById(idStaff);
-        if (staff == null || staff.getOperationCompany().getId()!= user.getId()){
+        if (staff == null || staff.getOperationCompany().getId() != user.getId()) {
             throw new ApiException("Staff with this ID dosen't exist!");
         }
         staff.setAge(newStaff.getAge());
@@ -62,46 +58,73 @@ public class StaffService {
         staffRepository.save(staff);
     }
 
-    public void deleteStaff(Integer idOC,Integer idStaff){
+    public void deleteStaff(Integer idOC, Integer idStaff) {
         MyUser user = myUserRepositroy.findMyUsersById(idOC);
         Staff staff = staffRepository.findStaffById(idStaff);
-        if (staff == null || staff.getOperationCompany().getId()!= user.getId()){
+        if (staff == null || staff.getOperationCompany().getId() != user.getId()) {
             throw new ApiException("Staff with this ID dosen't exist!");
         }
         staffRepository.delete(staff);
     }
 
     //ارجع العمال بأقامة منتهية
-    public List<Staff> getStaffExipredIdentity(Integer idOC){
+    public void changeStaffToExpiredIdentity(Integer idOC) {
         MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
         List<Staff> staff = staffRepository.findAll();
-        if (staff.isEmpty()){
+        if (staff.isEmpty()) {
             throw new ApiException("No Staff Added!");
         }
 
-        List<Staff> staffExpired = null ;
-        for(int i = 0 ; i<staff.size();i++){
-            if(staff.get(i).getIdentifier().isBefore(LocalDateTime.now()) && staff.get(i).getOperationCompany().getId() == operationCompany.getId()) {
+
+        for (int i = 0; i < staff.size(); i++) {
+            if (staff.get(i).getIdentifier().isBefore(LocalDateTime.now()) && staff.get(i).getOperationCompany().getId() == operationCompany.getId()) {
                 staff.get(i).setStatus("EXPIRED IDENTITY");
                 staffRepository.save(staff.get(i));
-                staffExpired.add(staff.get(i));
             }
         }
 
-        return staffExpired;
     }
 
-    public void assignStaffToProject(Integer idOC,Integer projectId,List <Integer> staffIds){
-        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
+//    public void getStaffExipredIdentity(Integer idOC){
+//        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
+//        List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany.getOperationCompany());
+//        if (staffList.isEmpty()){
+//            throw new ApiException("No Staff Added!");
+//        }
+//
+//
+//    }
 
-        for(int i = 0 ; i<staffIds.size();i++) {
+    public void assignStaffToProject(Integer idOC, Integer projectId, List<Integer> staffIds) {
+        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
+        Project project = projectRepository.findProjectById(projectId);
+        if (project == null)
+            throw new ApiException("Project with this ID dosen't exist!");
+
+        for (int i = 0; i < staffIds.size(); i++) {
             Staff staff = staffRepository.findStaffById(staffIds.get(i));
             if (staff == null || staff.getOperationCompany().getId() != operationCompany.getId()) {
                 throw new ApiException("Staff with this ID dosen't exist!");
             }
-            projectRepository.findProjectById(projectId).getStaffs().add(staff);
+
+            staff.setProject(project);
+            staff.setStatus("WORKING");
+            project.getStaffs().add(staff);
             staffRepository.save(staff);
         }
+
+    }
+
+    public void changeStatusVacation(Integer idOC,Integer staffId) {
+        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
+        Staff staff = staffRepository.findStaffById(staffId);
+        if (staff == null)
+            throw new ApiException("Staff with this ID dosen't exist!");
+        if (!(staff.getStatus().equalsIgnoreCase("FREE")))
+            throw new ApiException("Staff is not free!");
+        staff.setStatus("VACATION");
+        staffRepository.save(staff);
+
 
     }
 

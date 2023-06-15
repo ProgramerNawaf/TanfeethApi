@@ -45,11 +45,11 @@ public class SpringConfiguration {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/account/register/**").permitAll()
-                .requestMatchers("/api/v1/staff/getExpired").hasAuthority("OPERATION")
+                .requestMatchers("/api/v1/staff/getExpired","/api/v1/staff/add","/api/v1/staff/get","/api/v1/staff/vacation","/api/v1/staff/assignProject").hasAuthority("OPERATION")
                 .requestMatchers("/api/v1/account/get").permitAll()
                 .requestMatchers("/api/v1/auth/admin").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/project/get").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/project/get","/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
                 //user access
                 .requestMatchers("/api/v1/auth/login").permitAll()
                 .anyRequest().authenticated()
