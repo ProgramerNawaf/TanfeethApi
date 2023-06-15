@@ -125,7 +125,6 @@ public class StaffService {
         staff.setStatus("VACATION");
         staffRepository.save(staff);
 
-
     }
 
 
