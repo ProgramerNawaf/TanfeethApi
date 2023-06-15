@@ -2,10 +2,7 @@ package com.example.tanfeeth.Service;
 
 
 import com.example.tanfeeth.ApiException.ApiException;
-import com.example.tanfeeth.Model.MyUser;
-import com.example.tanfeeth.Model.OperationCompany;
-import com.example.tanfeeth.Model.Project;
-import com.example.tanfeeth.Model.Staff;
+import com.example.tanfeeth.Model.*;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import com.example.tanfeeth.Repository.OperationCompanyRepository;
 import com.example.tanfeeth.Repository.ProjectRepository;
@@ -14,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -84,17 +82,6 @@ public class StaffService {
         }
 
     }
-
-//    public void getStaffExipredIdentity(Integer idOC){
-//        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
-//        List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany.getOperationCompany());
-//        if (staffList.isEmpty()){
-//            throw new ApiException("No Staff Added!");
-//        }
-//
-//
-//    }
-
     public void assignStaffToProject(Integer idOC, Integer projectId, List<Integer> staffIds) {
         MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
         Project project = projectRepository.findProjectById(projectId);
@@ -116,14 +103,27 @@ public class StaffService {
     }
 
     public void changeStatusVacation(Integer idOC,Integer staffId) {
-        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
         Staff staff = staffRepository.findStaffById(staffId);
-        if (staff == null)
+        if (staff == null && staff.getOperationCompany().getId()==idOC)
             throw new ApiException("Staff with this ID dosen't exist!");
         if (!(staff.getStatus().equalsIgnoreCase("FREE")))
             throw new ApiException("Staff is not free!");
         staff.setStatus("VACATION");
         staffRepository.save(staff);
+    }
+
+    public List<Staff> getAllStaffExpired(Integer idOC){
+        OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
+        List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
+        List<Staff> expiredStaff = new ArrayList<>();
+        for (int i = 0 ; i<staffList.size();i++){
+            if (staffList.get(i).getStatus().equalsIgnoreCase("EXPIRED IDENTITY")){
+                expiredStaff.add(staffList.get(i));
+            }
+        }
+        return expiredStaff;
+
+
     }
 
 
