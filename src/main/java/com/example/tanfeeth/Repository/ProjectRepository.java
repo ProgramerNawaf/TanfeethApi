@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ProjectRepository extends JpaRepository<Project,Integer> {
 
     Project findProjectById(Integer id);
+    List<Project> findProjectsByInNeedCompany(InNeedCompany inNeedCompany);
+    List<Project> findProjectsByStatus(String status);
 }
