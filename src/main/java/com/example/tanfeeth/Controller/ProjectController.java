@@ -20,15 +20,15 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/get")
-    public ResponseEntity getAll(){
-        List<Project> projectList = projectService.getAll();
-        return ResponseEntity.status(200).body(projectList);
+    public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
+
+        return ResponseEntity.status(200).body(projectService.getCompanyProjects(user.getId()));
     }
 
-    @GetMapping("/get-project-company")
-    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user){
+    @GetMapping("/get-project-company/{projectId}")
+    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user,@PathVariable Integer projectId){
 
-        return ResponseEntity.status(200).body(projectService.getCompanyProject(user.getId()));
+        return ResponseEntity.status(200).body(projectService.getProjectByCompanyId(user.getId(), projectId));
     }
 
     @PostMapping("/add")

@@ -9,6 +9,8 @@ import com.example.tanfeeth.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,37 +24,35 @@ public class ProjectService {
     private final InNeedCompanyRepository inNeedCompanyRepository;
     private final StaffRepository staffRepository;
 
-    public List<Project> getAll(){
+    public List<Project> getAll() {
         return projectRepository.findAll();
     }
 
-    public Set<Project> getCompanyProject(Integer companyId){
-       MyUser user =myUserRepositroy.findMyUsersById(companyId);
-        if(user == null)
-            new ApiException("Company dosen't exist!");
- 
-        if(user.getInNeedCompany() == null){
-            changeStatusForProjectToDelayed(companyId);
+    public Set<Project> getCompanyProjects(Integer companyId) {
+        MyUser user = myUserRepositroy.findMyUsersById(companyId);
+        if (user == null)
+            throw new ApiException("Company dosen't exist!");
+
+        if (user.getInNeedCompany() == null) {
+            changeStatusForProjectToDelayed();
             return user.getOperationCompany().getProjectSet();
-        else
-        }
-        else{
-            changeStatusForProjectToDelayed(companyId);
+        } else {
+            changeStatusForProjectToDelayed();
             return user.getInNeedCompany().getProjectSet();
         }
     }
 
-    public Set<Project> getProjectsByCompanyId(Integer id){
-        MyUser user =myUserRepositroy.findMyUsersById(id);
-        if(user == null)
-            new ApiException("Company dosen't exist!");
-        //تحديد نوع الشركة
-        if(user.getInNeedCompany() != null){
-           return user.getInNeedCompany().getProjectSet();
-        }else{
-            return user.getOperationCompany().getProjectSet();
-        }
 
+
+    public Project getProjectByCompanyId(Integer id, Integer projectId) {
+        MyUser user = myUserRepositroy.findMyUsersById(id);
+        Project p = projectRepository.findProjectById(projectId);
+        if (p == null)
+            throw new ApiException("Project dosen't exist!");
+        //تحديد نوع الشركة
+        if (!(user.getId() == p.getInNeedCompany().getId() || user.getId() == p.getOperationCompany().getId()))
+            throw new ApiException("Project is not assigned to this company!");
+        return p;
     }
 
     public void addProject(Project p , Integer id){
@@ -95,12 +95,12 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void changeStatusForProjectToDelayed(Integer idInNeed){
-        MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
-        InNeedCompany inNeedCompany = user.getInNeedCompany();
-        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+    public void changeStatusForProjectToDelayed(){
+
+        List<Project> project = projectRepository.findAll();
         for (int i =0 ; i<project.size();i++){
-            if (project.get(i).getEndDate().isAfter(LocalDateTime.now())&& !(project.get(i).getStatus().equalsIgnoreCase("FINISHED"))){
+            if (project.get(i).getEndDate().isBefore(LocalDateTime.now())&& !(project.get(i).getStatus().equalsIgnoreCase("FINISHED"))){
+
                 project.get(i).setStatus("DELAYED");
                 projectRepository.save(project.get(i));
             }
