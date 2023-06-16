@@ -42,10 +42,7 @@ public class InNeedCompanyController {
         return ResponseEntity.status(200).body("done updated ");
 
     }
-    @PostMapping("/logout")
-    public ResponseEntity logout() {
-        return ResponseEntity.status(200).body("logout user!");
-    }
+
 }
 
 

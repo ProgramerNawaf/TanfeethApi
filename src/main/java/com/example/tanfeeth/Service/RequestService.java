@@ -25,6 +25,12 @@ public class RequestService {
     private final MyUserRepositroy myUserRepositroy;
     private final ProjectRepository projectRepository;
 
+
+    public List<Request> getAll() {
+        List<Request> requests = requestRepository.findAll();
+        return requests;
+    }
+
     public List<Request> getCompanyRequests(Integer idCompany){
         MyUser user = myUserRepositroy.findMyUsersById(idCompany);
         if(user.getInNeedCompany() == null)
@@ -124,4 +130,6 @@ public class RequestService {
 
         }
     }
+
+
 }
