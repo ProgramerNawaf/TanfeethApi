@@ -64,4 +64,8 @@ public class Project {
     @OneToMany(mappedBy = "project",cascade = CascadeType.DETACH )
     @PrimaryKeyJoinColumn
     private Set<Staff> staffs;
+
+    @OneToOne
+    @JsonIgnore
+    private Request request;
 }
