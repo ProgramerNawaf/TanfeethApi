@@ -27,13 +27,14 @@ public class StaffService {
 
 
     public List<Staff> getAllStaffForAllCompany(){
+        changeStaffToExpiredIdentity();
         List<Staff> staffList = staffRepository.findAll();
         return staffList;
     }
 
     public List<Staff> getAllStaffForCompany(Integer idOC) {
         OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
-        changeStaffToExpiredIdentity(idOC);
+        changeStaffToExpiredIdentity();
         List<Staff> staffList = staffRepository.findStaffByOperationCompany(operationCompany);
         return staffList;
     }
@@ -71,8 +72,8 @@ public class StaffService {
     }
 
     //ارجع العمال بأقامة منتهية
-    public void changeStaffToExpiredIdentity(Integer idOC) {
-        MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
+    public void changeStaffToExpiredIdentity() {
+
         List<Staff> staff = staffRepository.findAll();
         if (staff.isEmpty()) {
             throw new ApiException("No Staff Added!");
@@ -80,7 +81,7 @@ public class StaffService {
 
 
         for (int i = 0; i < staff.size(); i++) {
-            if (staff.get(i).getIdentifier().isBefore(LocalDateTime.now()) && staff.get(i).getOperationCompany().getId() == operationCompany.getId()) {
+            if (staff.get(i).getIdentifier().isBefore(LocalDateTime.now()) ) {
                 staff.get(i).setStatus("EXPIRED IDENTITY");
                 staffRepository.save(staff.get(i));
             }

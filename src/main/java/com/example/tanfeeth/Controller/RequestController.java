@@ -21,8 +21,7 @@ public class RequestController {
     private final RequestService requestService;
 
 
-
-    @GetMapping("/get-for-company")
+    @GetMapping("/get")
     public ResponseEntity getAllRequestsForCompany(@AuthenticationPrincipal MyUser user){
 
         return ResponseEntity.status(200).body(requestService.getCompanyRequests(user.getId()));

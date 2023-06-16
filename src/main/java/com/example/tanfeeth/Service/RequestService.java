@@ -108,7 +108,9 @@ public class RequestService {
                     Project project = projectRepository.findProjectById(request.getProjectId());
                     request.setProject(project);
                     project.setRequest(request);
-                    project.setOperationCompany(request.getOperationCompany());
+
+                    project.setOperationCompany(myUserRepositroy.findMyUsersById(request.getUpdatedBy()).getOperationCompany());
+
                     projectRepository.save(project);
                 }
 

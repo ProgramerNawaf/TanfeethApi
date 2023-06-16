@@ -19,7 +19,12 @@ public class StaffController {
     private final StaffService staffService;
 
 
-    @GetMapping("/get-all-for-company")
+
+
+
+
+    @GetMapping("/get")
+r
     public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
         List<Staff> staffList =staffService.getAllStaffForCompany(user.getId());
         return ResponseEntity.status(200).body(staffList);

@@ -22,6 +22,7 @@ public class ProjectService {
     private final StaffRepository staffRepository;
 
     public List<Project> getAll() {
+        changeStatusForProjectToDelayed();
         return projectRepository.findAll();
     }
 

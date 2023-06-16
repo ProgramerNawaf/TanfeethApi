@@ -30,6 +30,7 @@ public class MyUserController {
         return ResponseEntity.status(200).body("registered Operation Company");
     }
 
+
     @DeleteMapping("/delete")
     public ResponseEntity delete(@AuthenticationPrincipal MyUser user){
         myUserService.deleteUser(user.getId());
