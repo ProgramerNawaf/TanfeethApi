@@ -46,11 +46,15 @@ public class SpringConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/account/register/**").permitAll()
                 .requestMatchers("/api/v1/staff/getExpired","/api/v1/staff/add","/api/v1/staff/get","/api/v1/staff/vacation","/api/v1/staff/assignProject").hasAuthority("OPERATION")
-                .requestMatchers("/api/v1/account/get").permitAll()
-                .requestMatchers("/api/v1/auth/admin").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/inneed-company/update-email").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/account/get").permitAll()//only admin
                 .requestMatchers("/api/v1/inneed-company/get").permitAll()//only admin
+                .requestMatchers("/api/v1/opreation-comany/get").permitAll()//only admin
+                .requestMatchers("/api/v1/project/get").permitAll()//only admin
+                .requestMatchers("/api/v1/staff/get").permitAll()//only admin
+                .requestMatchers("/api/v1/request/get").permitAll() //only admin
+
 
                 .requestMatchers(   "/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
                 //user access

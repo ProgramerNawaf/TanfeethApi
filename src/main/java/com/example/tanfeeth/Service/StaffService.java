@@ -25,6 +25,12 @@ public class StaffService {
     private final OperationCompanyRepository operationCompanyRepository;
     private final ProjectRepository projectRepository;
 
+
+    public List<Staff> getAllStaffForAllCompany(){
+        List<Staff> staffList = staffRepository.findAll();
+        return staffList;
+    }
+
     public List<Staff> getAllStaffForCompany(Integer idOC) {
         OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
         changeStaffToExpiredIdentity(idOC);
