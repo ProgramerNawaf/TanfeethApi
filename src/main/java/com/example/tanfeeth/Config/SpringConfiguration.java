@@ -54,7 +54,7 @@ public class SpringConfiguration {
                 .requestMatchers("/api/v1/complaint/**").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/inneed-company/**").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/project/get-delayed").hasAuthority("INNEED")
+
 
                 // only operation
                 .requestMatchers("/api/v1/opreation-comany/**").hasAuthority("OPERATION")
@@ -65,6 +65,7 @@ public class SpringConfiguration {
                 .requestMatchers("/api/v1/project/get-all-for-company").authenticated()
                 .requestMatchers("/api/v1/project/get-project-company/{projectId}").authenticated()
                 .requestMatchers("/api/v1/request/**").authenticated()
+                .requestMatchers("/api/v1/project/get-delayed").authenticated()
 
                 .requestMatchers("/api/v1/account/login").permitAll()
                 .anyRequest().authenticated()
