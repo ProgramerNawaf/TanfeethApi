@@ -40,6 +40,7 @@ public class MyUserService {
                 inNeedCompanyDTO.getWorkPermit(),
                 userInNeedCompany,
                 null,
+                null,
                 null);
         userInNeedCompany.setInNeedCompany(inNeedCompany);
         myUserRepositroy.save(userInNeedCompany);

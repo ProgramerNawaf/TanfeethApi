@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface OperationCompanyRepository extends JpaRepository<OperationCompany,Integer> {
 
     OperationCompany findOperationCompanyById(Integer id);
+    OperationCompany findOperationCompanyByName(String name);
 
 }
