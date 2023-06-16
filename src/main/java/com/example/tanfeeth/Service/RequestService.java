@@ -2,6 +2,7 @@ package com.example.tanfeeth.Service;
 
 import com.example.tanfeeth.ApiException.ApiException;
 
+import com.example.tanfeeth.DTO.RequestDTO;
 import com.example.tanfeeth.Model.MyUser;
 import com.example.tanfeeth.Model.Project;
 import com.example.tanfeeth.Model.Request;
@@ -32,30 +33,90 @@ public class RequestService {
             return requestRepository.findRequestsByInNeedCompany(user.getInNeedCompany());
     }
 
-    public void addRequest(Integer idCompany, Request request){
+    public void addRequest(Integer idCompany, RequestDTO request){
         MyUser user = myUserRepositroy.findMyUsersById(idCompany);
-        Project project = projectRepository.findProjectByName(request.getProjectName());
+        Project project = projectRepository.findProjectById(request.getProjectId());
         if(project == null)
             throw new ApiException("Project with this ID dosen't exist!");
+        Request newRequest = new Request();
 
         if(user.getOperationCompany() == null){
-            request.setInNeedCompany(user.getInNeedCompany());
-            request.setStatus("INPROGRESS");
-            request.setCreatedAt(LocalDateTime.now());
-            request.setCreatedBy(idCompany);
-            request.setUpdatedBy(idCompany);
-            user.getInNeedCompany().getRequestSet().add(request);
-            requestRepository.save(request);
+            newRequest.setInNeedCompany(user.getInNeedCompany());
+            MyUser operationUser =myUserRepositroy.findMyUsersById(request.getOperationCompanyId());
+            if(operationUser.getOperationCompany() == null)
+                throw new ApiException("Operation company with this ID dosen't exist!");
+            newRequest.setOperationCompany(operationUser.getOperationCompany());
+            newRequest.setOffer(request.getOffer());
+            newRequest.setProjectId(request.getProjectId());
+            newRequest.setStatus("INPROGRESS");
+            newRequest.setCreatedAt(LocalDateTime.now());
+            newRequest.setCreatedBy(idCompany);
+            newRequest.setUpdatedBy(idCompany);
+            user.getInNeedCompany().getRequestSet().add(newRequest);
+            requestRepository.save(newRequest);
         }else{
-            request.setOperationCompany(user.getOperationCompany());
-            request.setStatus("INPROGRESS");
-            request.setCreatedAt(LocalDateTime.now());
-            request.setCreatedBy(idCompany);
-            request.setUpdatedBy(idCompany);
-            user.getOperationCompany().getRequestSet().add(request);
-            requestRepository.save(request);
+            newRequest.setOperationCompany(user.getOperationCompany());
+            newRequest.setInNeedCompany(project.getInNeedCompany());
+            newRequest.setStatus("INPROGRESS");
+            newRequest.setCreatedAt(LocalDateTime.now());
+            newRequest.setOffer(request.getOffer());
+            newRequest.setProjectId(request.getProjectId());
+            newRequest.setCreatedBy(idCompany);
+            newRequest.setUpdatedBy(idCompany);
+            user.getOperationCompany().getRequestSet().add(newRequest);
+            requestRepository.save(newRequest);
         }
     }
 
+    public void updateRequest(Integer companyId ,Request r , Integer requestId){
+        MyUser user = myUserRepositroy.findMyUsersById(companyId);
+        Request request = requestRepository.findRequestById(requestId);
+        if(request==null)
+            throw new ApiException("Request with this id dosen't exist!");
 
+        boolean flag=false;
+        if(user.getInNeedCompany() == null){
+            List<Request> requestList = requestRepository.findRequestsByOperationCompany(user.getOperationCompany());
+
+            for(int i = 0 ; i<requestList.size();i++) {
+                if (request.getId() == requestList.get(i).getId())
+                    flag = true;
+            }
+            if(!flag)
+                throw new ApiException("No such request for this company!");
+            request.setOffer(r.getOffer());
+            request.setStatus(r.getStatus());
+            request.setUpdatedBy(request.getOperationCompany().getId());
+            requestRepository.save(request);
+        }else{
+            List<Request> requestList = requestRepository.findRequestsByInNeedCompany(user.getInNeedCompany());
+            for(int i = 0 ; i<requestList.size();i++) {
+                if (request.getId() == requestList.get(i).getId())
+                    flag = true;
+            }
+            if(!flag)
+                throw new ApiException("No such request for this company!");
+
+
+                if(r.getStatus().equalsIgnoreCase("APPROVED")) {
+                Project project = projectRepository.findProjectById(request.getProjectId());
+                request.setProject(project);
+                project.setRequest(request);
+                projectRepository.save(project);
+
+                }
+
+                if (r.getStatus().equalsIgnoreCase("DECLINED")) {
+                    request.setInNeedCompany(null);
+                    request.setOperationCompany(null);
+                    requestRepository.delete(request);
+                    return;
+                }
+            request.setOffer(r.getOffer());
+            request.setStatus(r.getStatus());
+            request.setUpdatedBy(request.getInNeedCompany().getId());
+            requestRepository.save(request);
+
+        }
+    }
 }

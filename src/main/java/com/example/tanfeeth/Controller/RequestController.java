@@ -1,6 +1,7 @@
 package com.example.tanfeeth.Controller;
 
 
+import com.example.tanfeeth.DTO.RequestDTO;
 import com.example.tanfeeth.Model.MyUser;
 import com.example.tanfeeth.Model.Request;
 import com.example.tanfeeth.Service.RequestService;
@@ -24,8 +25,14 @@ public class RequestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addRequest(@AuthenticationPrincipal MyUser user,@Valid @RequestBody Request request){
+    public ResponseEntity addRequest(@AuthenticationPrincipal MyUser user,@Valid @RequestBody RequestDTO request){
         requestService.addRequest(user.getId(), request);
         return ResponseEntity.status(200).body("Request send!");
+    }
+
+    @PutMapping("/update/{requestID}")
+    public ResponseEntity addRequest(@AuthenticationPrincipal MyUser user,@Valid @RequestBody Request request,@PathVariable Integer requestID){
+        requestService.updateRequest(user.getId(), request,requestID);
+        return ResponseEntity.status(200).body("Request updated!");
     }
 }

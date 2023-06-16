@@ -25,10 +25,10 @@ public class Request {
 
 
     private Double offer;
-   
+
     private String status;
-    @Column(columnDefinition = "varchar(20) not null")
-    private String projectName;
+
+    private Integer projectId;
 
     private Integer createdBy;
 
@@ -47,6 +47,10 @@ public class Request {
     @JsonIgnore
     @JoinColumn(name = "in_need_company_id",referencedColumnName = "my_user_id")
     private InNeedCompany inNeedCompany;
+
+    @OneToOne(mappedBy = "request",cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Project project;
 
 
 }
