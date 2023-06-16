@@ -20,16 +20,12 @@ import java.util.List;
 @RestController
 public class InNeedCompanyController {
 
-    private final MyUserService myUserService;
+
     private final InNeedCompanyService inNeedCompanyService;
 
 
 
-    @GetMapping("/get")
-    public ResponseEntity getAllInNeedCompany(){
-        List<InNeedCompany> inNeedCompanies = inNeedCompanyService.getAllCompany();
-        return ResponseEntity.status(200).body(inNeedCompanies);
-    }
+
     @GetMapping("/get-details")
     public ResponseEntity getCompany(@AuthenticationPrincipal MyUser myUser){
         MyUser user = inNeedCompanyService.getDetailsCompany(myUser.getId());
