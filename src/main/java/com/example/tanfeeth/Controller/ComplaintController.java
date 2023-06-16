@@ -17,11 +17,7 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
-    @GetMapping("/getAll")
-    public ResponseEntity getAll(@AuthenticationPrincipal MyUser user){
 
-        return ResponseEntity.status(200).body(complaintService.getAll());
-    }
     @GetMapping("/get")
     public ResponseEntity getComplaintForCompany(@AuthenticationPrincipal MyUser user){
 

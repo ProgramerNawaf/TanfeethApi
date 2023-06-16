@@ -25,6 +25,7 @@ public class ProjectService {
     private final StaffRepository staffRepository;
 
     public List<Project> getAll() {
+        changeStatusForProjectToDelayed();
         return projectRepository.findAll();
     }
 
@@ -81,6 +82,7 @@ public class ProjectService {
     public void finishProject(Integer idOC , Integer projectId){
         MyUser user = myUserRepositroy.findMyUsersById(idOC);
         Project project = projectRepository.findProjectById(projectId);
+        project.setOperationCompany(user.getOperationCompany());
         List <Staff> staff=staffRepository.findStaffByProject(project);
         if(project == null)
             throw new ApiException("Project with this ID dosen't exist!");
@@ -89,6 +91,7 @@ public class ProjectService {
 
         for(int i=0 ; i<staff.size();i++){
             staff.get(i).setStatus("FREE");
+            staff.get(i).setProject(null);
             staffRepository.save(staff.get(i));
         }
         project.setStatus("FINISHED");

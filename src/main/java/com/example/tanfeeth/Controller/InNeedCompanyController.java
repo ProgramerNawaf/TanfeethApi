@@ -25,11 +25,6 @@ public class InNeedCompanyController {
 
 
 
-    @GetMapping("/get")
-    public ResponseEntity getAllInNeedCompany(){
-        List<InNeedCompany> inNeedCompanies = inNeedCompanyService.getAllCompany();
-        return ResponseEntity.status(200).body(inNeedCompanies);
-    }
     @GetMapping("/get-details")
     public ResponseEntity getCompany(@AuthenticationPrincipal MyUser myUser){
         MyUser user = inNeedCompanyService.getDetailsCompany(myUser.getId());

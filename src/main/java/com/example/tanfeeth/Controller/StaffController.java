@@ -20,13 +20,9 @@ public class StaffController {
 
 
 
-    @GetMapping("/get")
-    public ResponseEntity getAllStaff(){
-        List<Staff> staffList = staffService.getAllStaffForAllCompany();
-        return ResponseEntity.status(200).body(staffList);
-    }
 
-    @GetMapping("/get-all-for-company")
+
+    @GetMapping("/get")
     public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
         List<Staff> staffList =staffService.getAllStaffForCompany(user.getId());
         return ResponseEntity.status(200).body(staffList);

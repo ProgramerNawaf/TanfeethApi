@@ -21,11 +21,7 @@ public class OperationCompanyController {
 
     private final OperationCompanyService operationCompanyService;
 
-    @GetMapping("/get")
-    public ResponseEntity getAllOperationCompany(){
-        List<OperationCompany> operationCompanyList = operationCompanyService.getAllCompany();
-        return ResponseEntity.status(200).body(operationCompanyList);
-    }
+
     @GetMapping("/get-details")
     public ResponseEntity getCompany(@AuthenticationPrincipal MyUser myUser){
         MyUser user = operationCompanyService.getDetailsCompany(myUser.getId());
