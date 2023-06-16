@@ -20,8 +20,9 @@ import java.util.List;
 @RestController
 public class InNeedCompanyController {
 
-    private final MyUserService myUserService;
+
     private final InNeedCompanyService inNeedCompanyService;
+
 
 
 
@@ -35,7 +36,6 @@ public class InNeedCompanyController {
     public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser myUser, @RequestBody InNeedCompanyDTO inNeedCompanyDTO){
         inNeedCompanyService.updateCompany(myUser.getId(),inNeedCompanyDTO);
         return ResponseEntity.status(200).body("done updated ");
-
     }
 
 }
