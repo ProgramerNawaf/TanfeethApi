@@ -47,6 +47,8 @@ public class SpringConfiguration {
                 .requestMatchers("api/v1/admin/**").permitAll() // admin
                 .requestMatchers("/api/v1/account/register/**").permitAll()
 
+
+
                 .requestMatchers("/api/v1/account/delete").authenticated()
                 .requestMatchers("/api/v1/account/logout").authenticated()
 

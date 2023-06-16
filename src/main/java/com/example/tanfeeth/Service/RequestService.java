@@ -108,8 +108,8 @@ public class RequestService {
                     Project project = projectRepository.findProjectById(request.getProjectId());
                     request.setProject(project);
                     project.setRequest(request);
+                    project.setOperationCompany(request.getOperationCompany());
                     projectRepository.save(project);
-
                 }
 
                 if (r.getStatus().equalsIgnoreCase("DECLINED")) {

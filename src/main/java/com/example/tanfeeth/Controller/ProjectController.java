@@ -21,9 +21,11 @@ public class ProjectController {
 
 
 
+
+
     @GetMapping("/get-all-for-company")
-    public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user){
-        return ResponseEntity.status(200).body(projectService.getCompanyProjects(user.getId()));
+    public ResponseEntity getCompanyProjects(){
+        return ResponseEntity.status(200).body(projectService.getAll());
     }
 
     @GetMapping("/get-project-company/{projectId}")
