@@ -1,10 +1,7 @@
 package com.example.tanfeeth.Service;
 
 import com.example.tanfeeth.ApiException.ApiException;
-import com.example.tanfeeth.Model.InNeedCompany;
-import com.example.tanfeeth.Model.MyUser;
-import com.example.tanfeeth.Model.Project;
-import com.example.tanfeeth.Model.Staff;
+import com.example.tanfeeth.Model.*;
 import com.example.tanfeeth.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -109,12 +106,20 @@ public class ProjectService {
 
     public List<Project> getAllDelayedProject(Integer idInNeed){
         MyUser user = myUserRepositroy.findMyUsersById(idInNeed);
-        InNeedCompany inNeedCompany = user.getInNeedCompany();
-        List<Project> project = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        InNeedCompany inNeedCompany = new InNeedCompany();
+        OperationCompany operationCompany = new OperationCompany();
+        List<Project> projectList = new ArrayList<>();
+        if (user.getOperationCompany()==null){
+             inNeedCompany= user.getInNeedCompany();
+             projectList = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+        }else {
+            operationCompany = user.getOperationCompany();
+            projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
+        }
         List<Project> projectDELAYED = new ArrayList<>();
-        for (int i =0 ; i<project.size();i++){
-            if (project.get(i).getStatus().equalsIgnoreCase("DELAYED")){
-                projectDELAYED.add(project.get(i));
+        for (int i =0 ; i<projectList.size();i++){
+            if (projectList.get(i).getStatus().equalsIgnoreCase("DELAYED")){
+                projectDELAYED.add(projectList.get(i));
             }
         }
         return projectDELAYED;
