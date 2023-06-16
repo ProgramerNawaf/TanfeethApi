@@ -44,21 +44,29 @@ public class SpringConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
+                .requestMatchers("api/v1/admin/**").permitAll() // admin
                 .requestMatchers("/api/v1/account/register/**").permitAll()
-                .requestMatchers("/api/v1/staff/getExpired","/api/v1/staff/add","/api/v1/staff/get","/api/v1/staff/vacation","/api/v1/staff/assignProject").hasAuthority("OPERATION")
-                .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/inneed-company/update-email").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/account/get").permitAll()//only admin
-                .requestMatchers("/api/v1/inneed-company/get").permitAll()//only admin
-                .requestMatchers("/api/v1/opreation-comany/get").permitAll()//only admin
-                .requestMatchers("/api/v1/project/get").permitAll()//only admin
-                .requestMatchers("/api/v1/staff/get").permitAll()//only admin
-                .requestMatchers("/api/v1/request/get").permitAll() //only admin
 
+                .requestMatchers("/api/v1/account/delete").authenticated()
+                .requestMatchers("/api/v1/account/logout").authenticated()
 
-                .requestMatchers(   "/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
-                //user access
-                .requestMatchers("/api/v1/auth/login").permitAll()
+                //only inneed
+                .requestMatchers("/api/v1/complaint/**").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/inneed-company/**").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/project/get-delayed").hasAuthority("INNEED")
+
+                // only operation
+                .requestMatchers("/api/v1/opreation-comany/**").hasAuthority("OPERATION")
+                .requestMatchers("/api/v1/staff/**").hasAuthority("OPERATION")
+                .requestMatchers("/api/v1/project/project-finish/{projectId}").hasAuthority("OPERATION")
+
+                // all inneed and operation
+                .requestMatchers("/api/v1/project/get-all-for-company").authenticated()
+                .requestMatchers("/api/v1/project/get-project-company/{projectId}").authenticated()
+                .requestMatchers("/api/v1/request/**").authenticated()
+
+                .requestMatchers("/api/v1/account/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/account/logout")

@@ -19,13 +19,6 @@ public class StaffController {
     private final StaffService staffService;
 
 
-
-    @GetMapping("/get")
-    public ResponseEntity getAllStaff(){
-        List<Staff> staffList = staffService.getAllStaffForAllCompany();
-        return ResponseEntity.status(200).body(staffList);
-    }
-
     @GetMapping("/get-all-for-company")
     public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
         List<Staff> staffList =staffService.getAllStaffForCompany(user.getId());

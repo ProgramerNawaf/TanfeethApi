@@ -20,11 +20,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
 
-    @GetMapping("/get")
-    public ResponseEntity getAllProjects(){
-        List<Project> projectList = projectService.getAll();
-        return ResponseEntity.status(200).body(projectList);
-    }
+
     @GetMapping("/get-all-for-company")
     public ResponseEntity getCompanyProjects(@AuthenticationPrincipal MyUser user){
         return ResponseEntity.status(200).body(projectService.getCompanyProjects(user.getId()));
