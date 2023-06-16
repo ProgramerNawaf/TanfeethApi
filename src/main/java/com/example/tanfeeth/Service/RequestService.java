@@ -97,12 +97,12 @@ public class RequestService {
             if(!flag)
                 throw new ApiException("No such request for this company!");
 
-
-                if(r.getStatus().equalsIgnoreCase("APPROVED")) {
-                Project project = projectRepository.findProjectById(request.getProjectId());
-                request.setProject(project);
-                project.setRequest(request);
-                projectRepository.save(project);
+            if(!(r.getStatus() == null)) {
+                if (r.getStatus().equalsIgnoreCase("APPROVED")) {
+                    Project project = projectRepository.findProjectById(request.getProjectId());
+                    request.setProject(project);
+                    project.setRequest(request);
+                    projectRepository.save(project);
 
                 }
 
@@ -112,8 +112,12 @@ public class RequestService {
                     requestRepository.delete(request);
                     return;
                 }
+            }
+
             request.setOffer(r.getOffer());
-            request.setStatus(r.getStatus());
+            if(!(r.getStatus() == null)) {
+                request.setStatus(r.getStatus());
+            }
             request.setUpdatedBy(request.getInNeedCompany().getId());
             requestRepository.save(request);
 
