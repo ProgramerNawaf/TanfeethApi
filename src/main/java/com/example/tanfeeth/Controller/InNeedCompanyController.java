@@ -40,7 +40,6 @@ public class InNeedCompanyController {
     public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser myUser, @RequestBody InNeedCompanyDTO inNeedCompanyDTO){
         inNeedCompanyService.updateCompany(myUser.getId(),inNeedCompanyDTO);
         return ResponseEntity.status(200).body("done updated ");
-
     }
 
 }

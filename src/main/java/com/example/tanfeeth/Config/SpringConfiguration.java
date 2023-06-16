@@ -45,7 +45,7 @@ public class SpringConfiguration {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/account/register/**").permitAll()
-                .requestMatchers("/api/v1/staff/getExpired","/api/v1/staff/add","/api/v1/staff/get","/api/v1/staff/vacation","/api/v1/staff/assignProject").hasAuthority("OPERATION")
+                .requestMatchers("/api/v1/staff/getExpired","/api/v1/staff/add","/api/v1/staff/get","/api/v1/staff/vacation","/api/v1/staff/assignProject","/api/v1/project/project-finish").hasAuthority("OPERATION")
                 .requestMatchers("/api/v1/inneed-company/get-details").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/inneed-company/update-email").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/account/get").permitAll()//only admin
