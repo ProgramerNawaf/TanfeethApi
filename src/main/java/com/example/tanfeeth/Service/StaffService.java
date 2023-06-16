@@ -43,7 +43,6 @@ public class StaffService {
         staff.setOperationCompany(operationCompany);
         operationCompany.getStaffSet().add(staff);
         staffRepository.save(staff);
-
     }
 
     public void updateStaff(Integer idOC, Integer idStaff, Staff newStaff) {

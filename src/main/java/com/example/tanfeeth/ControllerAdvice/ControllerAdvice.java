@@ -3,6 +3,7 @@ package com.example.tanfeeth.ControllerAdvice;
 
 import com.example.tanfeeth.ApiException.ApiException;
 import com.example.tanfeeth.ApiResponse.ApiResponse;
+import org.hibernate.LazyInitializationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -64,5 +65,12 @@ public class ControllerAdvice {
         String message = e.getMessage();
         return ResponseEntity.status(400).body(new ApiResponse(message));
     }
+    @ExceptionHandler(value = LazyInitializationException.class)
+    public ResponseEntity<ApiResponse> LazyInitializationException(LazyInitializationException e) {
+        String message = e.getMessage();
+        return ResponseEntity.status(400).body(new ApiResponse(message));
+    }
+
+
 
 }

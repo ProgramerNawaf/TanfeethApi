@@ -46,7 +46,7 @@ public class InNeedCompany {
     @PrimaryKeyJoinColumn
     private Set<Request> requestSet;
 
-    @OneToMany(mappedBy = "inNeedCompany",cascade = CascadeType.DETACH )
+    @OneToMany(mappedBy = "inNeedCompany",cascade = CascadeType.DETACH ,fetch=FetchType.EAGER)
     @PrimaryKeyJoinColumn
     private Set<Complaint> complaintSet;
 
