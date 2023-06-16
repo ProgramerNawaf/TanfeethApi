@@ -109,6 +109,7 @@ public class RequestService {
                 if (r.getStatus().equalsIgnoreCase("DECLINED")) {
                     request.setInNeedCompany(null);
                     request.setOperationCompany(null);
+                    request.setProject(null);
                     requestRepository.delete(request);
                     return;
                 }
