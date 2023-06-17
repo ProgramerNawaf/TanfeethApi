@@ -19,6 +19,7 @@ public class MyUserService {
     private final OperationCompanyRepository operationCompanyRepository;
     private final ProjectRepository projectRepository;
     private final StaffRepository staffRepository;
+    private final RequestRepository requestRepository;
 
     public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
@@ -85,9 +86,17 @@ public class MyUserService {
         if (user.getInNeedCompany()==null){
             OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
+            List <Request> requestList = requestRepository.findRequestsByOperationCompany(operationCompany);
             List<Staff> staffProject=null;
+            List<Staff> staffAll = staffRepository.findStaffByOperationCompany(operationCompany);
+            for (int j = 0 ;j<staffAll.size();j++){
+                staffAll.get(j).setProject(null);
+                staffAll.get(j).setOperationCompany(null);
+                staffRepository.delete(staffAll.get(j));
+            }
             for (int i= 0 ; i<projectList.size();i++){
                 projectList.get(i).setOperationCompany(null);
+                projectList.get(i).setRequest(null);
                 staffProject = staffRepository.findStaffByProject(projectList.get(i));
                 for (int j = 0 ;j<staffProject.size();j++){
                     staffProject.get(j).setProject(null);
@@ -95,29 +104,51 @@ public class MyUserService {
                     staffRepository.delete(staffProject.get(j));
                 }
             }
-            List<Staff> staffAll = staffRepository.findStaffByOperationCompany(operationCompany);
-            for (int j = 0 ;j<staffAll.size();j++){
-                staffAll.get(j).setProject(null);
-                staffAll.get(j).setOperationCompany(null);
-                staffRepository.delete(staffAll.get(j));
+            for(int i = 0 ; i<requestList.size();i++){
+                requestList.get(i).setInNeedCompany(null);
+                requestList.get(i).setOperationCompany(null);
+                requestList.get(i).setProject(null);
+                requestRepository.delete(requestList.get(i));
             }
+
+
+
+
             operationCompanyRepository.delete(operationCompany);
             myUserRepositroy.delete(user);
         }else{
             InNeedCompany inNeedCompany = inNeedCompanyRepository.findInNeedCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByInNeedCompany(inNeedCompany);
+
             List<Staff> staffList =null;
+
 
             for (int i= 0;i<projectList.size();i++){
                 projectList.get(i).setInNeedCompany(null);
+                projectList.get(i).setOperationCompany(null);
+                if(projectList.get(i).getRequest()!= null) {
+                    projectList.get(i).getRequest().setProject(null);
+                    projectList.get(i).setRequest(null);
+                }
+
+
                 staffList = staffRepository.findStaffByProject(projectList.get(i));
                 for (int j = 0 ;j<staffList.size();j++){
                     staffList.get(j).setProject(null);
                     staffList.get(j).setStatus("FREE");
                     staffRepository.save(staffList.get(j));
                 }
+
                 projectRepository.delete(projectList.get(i));
             }
+            List <Request> requestList = requestRepository.findRequestsByInNeedCompany(inNeedCompany);
+            for(int i = 0 ; i<requestList.size();i++){
+                requestList.get(i).setInNeedCompany(null);
+                requestList.get(i).setOperationCompany(null);
+                requestList.get(i).setProject(null);
+                requestRepository.delete(requestList.get(i));
+            }
+
             inNeedCompanyRepository.delete(inNeedCompany);
             myUserRepositroy.delete(user);
 

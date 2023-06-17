@@ -24,7 +24,6 @@ public class StaffController {
 
 
     @GetMapping("/get")
-r
     public ResponseEntity getAllStaffForCompany(@AuthenticationPrincipal MyUser user){
         List<Staff> staffList =staffService.getAllStaffForCompany(user.getId());
         return ResponseEntity.status(200).body(staffList);
@@ -53,9 +52,9 @@ r
         return ResponseEntity.status(200).body(staffList);
     }
 
-    @PutMapping("/assignProject/{projectId}")
-    public ResponseEntity assignStaffToProject(@AuthenticationPrincipal MyUser user, @RequestBody List <Integer> staffIds ,@PathVariable Integer projectId){
-        staffService.assignStaffToProject(user.getId(),projectId,staffIds);
+    @PutMapping("/assignProject/{requestId}")
+    public ResponseEntity assignStaffToProject(@AuthenticationPrincipal MyUser user, @RequestBody List <Integer> staffIds ,@PathVariable Integer requestId){
+        staffService.assignStaffToProject(user.getId(),requestId,staffIds);
         return ResponseEntity.status(200).body("Staff assigned!");
     }
 

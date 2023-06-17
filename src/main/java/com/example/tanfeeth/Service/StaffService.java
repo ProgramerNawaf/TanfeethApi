@@ -3,10 +3,7 @@ package com.example.tanfeeth.Service;
 
 import com.example.tanfeeth.ApiException.ApiException;
 import com.example.tanfeeth.Model.*;
-import com.example.tanfeeth.Repository.MyUserRepositroy;
-import com.example.tanfeeth.Repository.OperationCompanyRepository;
-import com.example.tanfeeth.Repository.ProjectRepository;
-import com.example.tanfeeth.Repository.StaffRepository;
+import com.example.tanfeeth.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +21,7 @@ public class StaffService {
     private final MyUserRepositroy myUserRepositroy;
     private final OperationCompanyRepository operationCompanyRepository;
     private final ProjectRepository projectRepository;
+    private final RequestRepository requestRepository;
 
 
     public List<Staff> getAllStaffForAllCompany(){
@@ -88,11 +86,12 @@ public class StaffService {
         }
 
     }
-    public void assignStaffToProject(Integer idOC, Integer projectId, List<Integer> staffIds) {
+    public void assignStaffToProject(Integer idOC, Integer requestId, List<Integer> staffIds) {
         MyUser operationCompany = myUserRepositroy.findMyUsersById(idOC);
-        Project project = projectRepository.findProjectById(projectId);
-        if (project == null)
+        Request request = requestRepository.findRequestById(requestId);
+        if (request == null)
             throw new ApiException("Project with this ID dosen't exist!");
+        Project project = request.getProject();
 
         for (int i = 0; i < staffIds.size(); i++) {
             Staff staff = staffRepository.findStaffById(staffIds.get(i));

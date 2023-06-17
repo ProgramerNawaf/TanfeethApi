@@ -31,60 +31,63 @@ public class AdminController {
         List<MyUser> myUsers = myUserService.getAllUser();
         return ResponseEntity.status(200).body(myUsers);
     }
+
     @GetMapping("/get-all-inneed")
-    public ResponseEntity getAllInNeedCompany(){
+    public ResponseEntity getAllInNeedCompany() {
         List<InNeedCompany> inNeedCompanies = inNeedCompanyService.getAllCompany();
         return ResponseEntity.status(200).body(inNeedCompanies);
     }
 
     @GetMapping("/get-all-operation")
-    public ResponseEntity getAllOperationCompany(){
+    public ResponseEntity getAllOperationCompany() {
         List<OperationCompany> operationCompanyList = operationCompanyService.getAllCompany();
         return ResponseEntity.status(200).body(operationCompanyList);
     }
 
     @GetMapping("/get-all-project")
-    public ResponseEntity getAllProjects(){
+    public ResponseEntity getAllProjects() {
         List<Project> projectList = projectService.getAll();
         return ResponseEntity.status(200).body(projectList);
     }
+
     @GetMapping("/get-all-request")
-    public ResponseEntity getAllRequest(){
+    public ResponseEntity getAllRequest() {
         List<Request> requests = requestService.getAll();
         return ResponseEntity.status(200).body(requests);
     }
 
     @GetMapping("/get-all-staff")
-    public ResponseEntity getAllStaff(){
+    public ResponseEntity getAllStaff() {
         List<Staff> staffList = staffService.getAllStaffForAllCompany();
         return ResponseEntity.status(200).body(staffList);
     }
 
     @GetMapping("/get-all-complaint")
-    public ResponseEntity getAllComplaint(){
+    public ResponseEntity getAllComplaint() {
         return ResponseEntity.status(200).body(complaintService.getAll());
     }
 
 
     @PutMapping("/activate/{companyId}")
-    public ResponseEntity activate(@PathVariable Integer companyId){
-        adminService.handleCompany(true,companyId);
+    public ResponseEntity activate(@PathVariable Integer companyId) {
+        adminService.handleCompany(true, companyId);
 
         return ResponseEntity.status(200).body("Company Activated!");
     }
 
     @PutMapping("/deactivate/{companyId}")
-    public ResponseEntity deactivate(@PathVariable Integer companyId){
-        adminService.handleCompany(false,companyId);
+    public ResponseEntity deactivate(@PathVariable Integer companyId) {
+        adminService.handleCompany(false, companyId);
 
         return ResponseEntity.status(200).body("Company Deactivated!");
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerAdmin(@RequestBody MyUser admin){
+    public ResponseEntity registerAdmin(@RequestBody MyUser admin) {
         adminService.register(admin);
         return ResponseEntity.status(200).body("Admin added!");
     }
+}
 
 
 

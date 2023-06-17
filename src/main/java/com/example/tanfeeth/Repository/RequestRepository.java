@@ -13,4 +13,6 @@ public interface RequestRepository extends JpaRepository<Request,Integer> {
     List<Request> findRequestsByInNeedCompany(InNeedCompany inNeedCompany);
 
     Request findRequestById(Integer id);
+
+    Request findRequestByProjectId(Integer id);
 }

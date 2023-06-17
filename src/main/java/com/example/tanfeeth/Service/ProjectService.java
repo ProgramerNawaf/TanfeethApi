@@ -20,6 +20,7 @@ public class ProjectService {
     private final OperationCompanyRepository operationCompanyRepository;
     private final InNeedCompanyRepository inNeedCompanyRepository;
     private final StaffRepository staffRepository;
+    private final RequestRepository requestRepository;
 
     public List<Project> getAll() {
         changeStatusForProjectToDelayed();
@@ -73,6 +74,10 @@ public class ProjectService {
         }
         if(project.getOperationCompany()!=null)
             throw new ApiException("Can't delete this project is assigned to "+project.getOperationCompany().getName()+" !");
+           Request request = requestRepository.findRequestByProjectId(project.getId());
+           request.setProjectId(null);
+           project.setRequest(null);
+           requestRepository.delete(request);
             projectRepository.delete(project);
     }
 
