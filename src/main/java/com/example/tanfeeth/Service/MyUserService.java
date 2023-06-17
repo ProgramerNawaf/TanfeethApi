@@ -31,6 +31,7 @@ public class MyUserService {
                 hash,
                 inNeedCompanyDTO.getPhoneNumber(),
                 "INNEED",
+                false,
                 null,
                 null);
         InNeedCompany inNeedCompany = new InNeedCompany(
@@ -55,7 +56,7 @@ public class MyUserService {
                 hash,
                 operationCompanyDTO.getPhoneNumber(),
                 "OPERATION",
-
+                false,
                 null,
                 null
         );
