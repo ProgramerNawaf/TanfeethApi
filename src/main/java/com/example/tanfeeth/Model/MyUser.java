@@ -44,6 +44,8 @@ public class MyUser implements UserDetails {
     private String role;
     // تحديد حالات الحساب
 
+    private boolean enabled;
+
 
 
 
@@ -88,7 +90,7 @@ public class MyUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
     //locking an account
 }

@@ -6,9 +6,8 @@ import com.example.tanfeeth.Repository.MyUserRepositroy;
 import com.example.tanfeeth.Service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class AdminController {
     private final RequestService requestService;
     private final StaffService staffService;
     private final ComplaintService complaintService;
+    private final AdminService adminService;
 
     @GetMapping("/get-users")
     public ResponseEntity getAllUser() {
@@ -65,6 +65,26 @@ public class AdminController {
         return ResponseEntity.status(200).body(complaintService.getAll());
     }
 
+
+    @PutMapping("/activate/{companyId}")
+    public ResponseEntity activate(@PathVariable Integer companyId){
+        adminService.handleCompany(true,companyId);
+
+        return ResponseEntity.status(200).body("Company Activated!");
+    }
+
+    @PutMapping("/deactivate/{companyId}")
+    public ResponseEntity deactivate(@PathVariable Integer companyId){
+        adminService.handleCompany(false,companyId);
+
+        return ResponseEntity.status(200).body("Company Deactivated!");
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity registerAdmin(@RequestBody MyUser admin){
+        adminService.register(admin);
+        return ResponseEntity.status(200).body("Admin added!");
+    }
 
 
 
