@@ -36,7 +36,7 @@ public class OperationCompanyRepositoryTest {
         strings.add("test1");
         strings.add("test2");
         myUser = new MyUser(null,"m@gmail.com","329487","0530503434","OPERATION",true,null,null);
-        operationCompany=new OperationCompany(null,"test",0.0,"138049283","3244234","test",strings,"it",myUser,null,null,null);
+        operationCompany=new OperationCompany(null,"test",0.0,0,"138049283","3244234","test",strings,"it",myUser,null,null,null);
     }
 
     @Test
