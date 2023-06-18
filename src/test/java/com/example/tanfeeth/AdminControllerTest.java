@@ -72,7 +72,7 @@ public class AdminControllerTest {
         inNeedCompany = new InNeedCompany(null,"m","23234","234234",myUser1,null,null,null);
         inNeedCompanies = Arrays.asList(inNeedCompany);
         // get all OC
-        operationCompany = new OperationCompany(null,"s",0.0,"2234","23423",null,null,null,myUser2,null,null,null);
+        operationCompany = new OperationCompany(null,"s",0.0,0,"2234","23423",null,null,null,myUser2,null,null,null);
         operationCompanyList = Arrays.asList(operationCompany);
         //get all project
         project = new Project(null,"stc",null,null,null,null,null,null,null,null,null,null);

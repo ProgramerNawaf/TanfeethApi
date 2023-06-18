@@ -44,7 +44,7 @@ public class SpringConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers("api/v1/admin/**").permitAll() // admin
+                .requestMatchers("api/v1/admin/**").hasAuthority("ADMIN") // admin
                 .requestMatchers("/api/v1/account/register/**").permitAll()
 
 
