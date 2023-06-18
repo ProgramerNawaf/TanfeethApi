@@ -27,6 +27,7 @@ public class OperationCompany {
     // check type
 
     private Double rate;
+    private Integer numOfRating;
     @Column(columnDefinition = "varchar(20) not null")
     @NotNull(message = "Work permit can't be null!")
     private String workPermit;

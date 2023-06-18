@@ -64,7 +64,7 @@ public class MyUserService {
         OperationCompany operationCompany = new OperationCompany(userOperationCompany.getId(),
                 operationCompanyDTO.getName(),
                 0.0,
-
+                0,
                 operationCompanyDTO.getWorkPermit(),
                 operationCompanyDTO.getCommerecePermit(),
                 operationCompanyDTO.getClassifacation(),
