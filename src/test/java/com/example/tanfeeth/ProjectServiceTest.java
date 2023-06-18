@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class ProjectServiceTest {
 
     @BeforeEach
     void setUp() {
-        project = new Project(null,"project","it","riyadh","test",null,null,"NEW",null,null,null,null);
-        project1 = new Project(null,"project1","it","riyadh","test1",null,null,"NEW",null,null,null,null);
-        project2 = new Project(null,"project2","it","riyadh","test2",null,null,"NEW",null,null,null,null);
+        project = new Project(null,"project","it","riyadh","test", LocalDateTime.now(),LocalDateTime.now(),"NEW",null,null,null,null);
+        project1 = new Project(null,"project1","it","riyadh","test1",LocalDateTime.now(),LocalDateTime.now(),"NEW",null,null,null,null);
+        project2 = new Project(null,"project2","it","riyadh","test2",LocalDateTime.now(),LocalDateTime.now(),"NEW",null,null,null,null);
         projectList.add(project);
         projectList.add(project1);
         projectList.add(project2);
@@ -45,6 +46,6 @@ public class ProjectServiceTest {
         when(projectRepository.findAll()).thenReturn(projectList);
         List<Project> projects = projectService.getAll();
         Assertions.assertEquals(projects,projectList);
-        verify(projectRepository,times(1)).findAll();
+        verify(projectRepository,times(2)).findAll();
     }
 }

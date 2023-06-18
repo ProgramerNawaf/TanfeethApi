@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class StaffServiceTest {
 
     @BeforeEach
     void setUp() {
-        staff = new Staff(null,"mohammed1",23,"M","it","saudi",null,null,null,null);
-        staff1 = new Staff(null,"mohammed2",23,"M","it","saudi",null,null,null,null);
-        staff2 = new Staff(null,"mohammed3",23,"M","it","saudi",null,null,null,null);
+        staff = new Staff(null,"mohammed1",23,"M","it","saudi", LocalDateTime.now(),null,null,null);
+        staff1 = new Staff(null,"mohammed2",23,"M","it","saudi",LocalDateTime.now(),null,null,null);
+        staff2 = new Staff(null,"mohammed3",23,"M","it","saudi",LocalDateTime.now(),null,null,null);
         staffList.add(staff);
         staffList.add(staff1);
         staffList.add(staff2);
@@ -44,7 +45,7 @@ public class StaffServiceTest {
         when(staffRepository.findAll()).thenReturn(staffList);
         List<Staff> staffList1 =staffService.getAllStaffForAllCompany();
         Assertions.assertEquals(staffList1,staffList);
-        verify(staffRepository,times(1)).findAll();
+        verify(staffRepository,times(2)).findAll();
     }
 
 }

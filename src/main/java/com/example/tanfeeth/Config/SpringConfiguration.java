@@ -55,7 +55,7 @@ public class SpringConfiguration {
                 //only inneed
                 .requestMatchers("/api/v1/complaint/**").hasAuthority("INNEED")
                 .requestMatchers("/api/v1/inneed-company/**").hasAuthority("INNEED")
-                .requestMatchers("/api/v1/project/add","/api/v1/project/delete").hasAuthority("INNEED")
+                .requestMatchers("/api/v1/project/add","/api/v1/project/delete","/api/v1/admin/get-users").hasAuthority("INNEED")
 
 
                 // only operation

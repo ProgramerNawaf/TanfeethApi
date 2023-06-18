@@ -35,7 +35,12 @@ public class InNeedCompanyController {
     @PutMapping("/update")
     public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser myUser, @RequestBody InNeedCompanyDTO inNeedCompanyDTO){
         inNeedCompanyService.updateCompany(myUser.getId(),inNeedCompanyDTO);
-        return ResponseEntity.status(200).body("done updated ");
+        return ResponseEntity.status(200).body("updated Company!");
+    }
+    @PutMapping("/rate/{idOc}")
+    public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser myUser, @RequestBody double rating , @PathVariable Integer idOc){
+        inNeedCompanyService.rateOperationCompany(rating,idOc);
+        return ResponseEntity.status(200).body("Operation company rated!");
     }
 
 }

@@ -39,7 +39,7 @@ public class ComplaintRepositoryTest {
     List<Complaint> complaintList = new ArrayList<>();
     @BeforeEach
     void setUp() {
-//        myUser = new MyUser(null,"m@gmail.com","12345","0530588577","INNEED",null,inNeedCompany);
+        myUser = new MyUser(null,"m@gmail.com","12345","0530588577","INNEED",false,null,inNeedCompany);
         inNeedCompany = new InNeedCompany(null,"STC","1015000000","08329480298",myUser,null,null,null);
         complaint = new Complaint(null,"OcName","test",inNeedCompany);
         complaint1 = new Complaint(null,"OcName1","test1",inNeedCompany);
