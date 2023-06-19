@@ -25,6 +25,7 @@ public class AdminController {
     private final StaffService staffService;
     private final ComplaintService complaintService;
     private final AdminService adminService;
+    private final ReportService reportService;
 
     @GetMapping("/get-users")
     public ResponseEntity getAllUser() {
@@ -86,6 +87,12 @@ public class AdminController {
     public ResponseEntity registerAdmin(@RequestBody MyUser admin) {
         adminService.register(admin);
         return ResponseEntity.status(200).body("Admin added!");
+    }
+
+    @GetMapping("/get-all-report")
+    public ResponseEntity getAllReport(){
+        List<Report> reports = reportService.getAll();
+        return ResponseEntity.status(200).body(reports);
     }
 }
 

@@ -17,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class AdminControllerTest {
         operationCompany = new OperationCompany(null,"s",0.0,0,"2234","23423",null,null,null,myUser2,null,null,null);
         operationCompanyList = Arrays.asList(operationCompany);
         //get all project
-        project = new Project(null,"stc",null,null,null,null,null,null,null,null,null,null);
+        project = new Project(null,"stc",null,null,null,null,null,null,null,null,null,null,null);
         projectList = Arrays.asList(project);
         // get all request
         request = new Request(null,200.0,"new",null,null,null,null,null,null,null);
