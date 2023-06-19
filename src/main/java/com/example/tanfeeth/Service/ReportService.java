@@ -39,10 +39,10 @@ public class ReportService {
         OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(idOC);
         Project project = projectRepository.findProjectById(idProject);
        if (project == null){
-           throw new ApiException("do not have this project");
+           throw new ApiException("Project with this id dosen't exist!");
        }
         if (project.getOperationCompany().getId()!=operationCompany.getId()){
-            throw new ApiException("do not have any project by this id");
+            throw new ApiException("Operation company dosen't have a project with this id!");
         }
         report.setProject(project);
         report.setReportDate(LocalDateTime.now());
@@ -55,17 +55,17 @@ public class ReportService {
         MyUser user = myUserRepositroy.findMyUsersById(id);
         Project project = projectRepository.findProjectById(idProject);
         if (project == null){
-            throw new ApiException("do not have this project");
+            throw new ApiException("Project with this id dosen't exist!");
         }
         if (user.getOperationCompany()!=null){
             if (project.getOperationCompany().getId()!=id || project.getOperationCompany()==null){
-                throw new ApiException("do not have any project by this id");
+                throw new ApiException("Project with this id dosen't exist!");
             }
              reports = reportRepository.findReportsByProject(project);
 
         }else {
             if (project.getInNeedCompany().getId()!= id){
-                throw new ApiException("do not have any project for this id");
+                throw new ApiException("Project with this id dosen't exist!");
             }
             reports = reportRepository.findReportsByProject(project);
         }
