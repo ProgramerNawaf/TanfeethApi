@@ -20,6 +20,7 @@ public class MyUserService {
     private final ProjectRepository projectRepository;
     private final StaffRepository staffRepository;
     private final RequestRepository requestRepository;
+    private final ReportRepository reportRepository;
 
     public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
@@ -83,11 +84,13 @@ public class MyUserService {
 
     public void deleteUser(Integer id){
         MyUser user = myUserRepositroy.findMyUsersById(id);
+        List<Report> reportsProject=null;
         if (user.getInNeedCompany()==null){
             OperationCompany operationCompany = operationCompanyRepository.findOperationCompanyById(user.getId());
             List<Project> projectList = projectRepository.findProjectsByOperationCompany(operationCompany);
             List <Request> requestList = requestRepository.findRequestsByOperationCompany(operationCompany);
             List<Staff> staffProject=null;
+
             List<Staff> staffAll = staffRepository.findStaffByOperationCompany(operationCompany);
             for (int j = 0 ;j<staffAll.size();j++){
                 staffAll.get(j).setProject(null);
@@ -98,6 +101,7 @@ public class MyUserService {
                 projectList.get(i).setOperationCompany(null);
                 projectList.get(i).setRequest(null);
                 staffProject = staffRepository.findStaffByProject(projectList.get(i));
+
                 for (int j = 0 ;j<staffProject.size();j++){
                     staffProject.get(j).setProject(null);
                     staffProject.get(j).setOperationCompany(null);
@@ -130,7 +134,11 @@ public class MyUserService {
                     projectList.get(i).getRequest().setProject(null);
                     projectList.get(i).setRequest(null);
                 }
-
+                reportsProject= reportRepository.findReportsByProject(projectList.get(i));
+                for (int j = 0 ;j<reportsProject.size();j++){
+                    reportsProject.get(j).setProject(null);
+                    reportRepository.delete(reportsProject.get(j));
+                }
 
                 staffList = staffRepository.findStaffByProject(projectList.get(i));
                 for (int j = 0 ;j<staffList.size();j++){
