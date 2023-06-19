@@ -68,4 +68,7 @@ public class Project {
     @OneToOne
     @JsonIgnore
     private Request request;
+
+    @OneToMany(mappedBy = "project" ,cascade = CascadeType.DETACH)
+    Set<Report> reports;
 }

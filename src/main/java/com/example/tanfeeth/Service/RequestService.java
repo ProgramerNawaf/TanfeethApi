@@ -123,7 +123,9 @@ public class RequestService {
                 }
             }
 
-            request.setOffer(r.getOffer());
+            if (r.getOffer()!=null){
+                request.setOffer(r.getOffer());
+            }
             if(!(r.getStatus() == null)) {
                 request.setStatus(r.getStatus());
             }
