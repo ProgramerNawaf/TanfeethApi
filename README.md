@@ -11,6 +11,8 @@ Tanfeeth API is system that connects large projects with operation companies, Th
 
 - Diffrent operation companies can obtain a project throw submiting a request showcasing thier service quality, expertise, and offers.
 
+- Requests are sent between companies until they agree or disagree on an offer.
+
 - InNeedCompany is provided Constent follow-up and evaluation over reports generated weekly from operation company to admin and in need company.
 
 
