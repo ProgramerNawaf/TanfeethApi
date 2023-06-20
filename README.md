@@ -16,4 +16,11 @@ Tanfeeth API is system that connects large projects with operation companies, Th
 
 The system was developed entirely using Java language and Spring Boot framework REST API, The database is: postgresql pgadmin.
 
+# Database
+![DB](https://github.com/ProgramerNawaf/TanfeethApi/assets/65816656/04e29ac5-13e9-435b-8038-588b2da16390)
 
+# use case
+![use case](https://github.com/ProgramerNawaf/TanfeethApi/assets/65816656/8b5c2ee8-7d8f-446d-abf3-96f9c85614e2)
+
+# Class diagram
+![class digram tanfeeth ](https://github.com/ProgramerNawaf/TanfeethApi/assets/65816656/8b3afa71-f100-4d7a-a9bc-17e9ca1a515c)
