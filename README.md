@@ -1,19 +1,17 @@
-# Tanfeeth API
-
-
-Tanfeeth API is system that connects large projects with operation companies, The system also provide constent evaulation and rating over operation compines work to make sure quality is assured.
-
-# The most prominent features developed in this system:
-
-- Operation company can add,update,delete staff and assign them to a project.
-
-- InNeedCompany can add,update,delete project.
-
-- Diffrent operation companies can obtain a project throw submiting a request showcasing thier service quality, expertise, and offers.
-
-- Requests are sent between companies until they agree or disagree on an offer.
-
-- InNeedCompany is provided Constent follow-up and evaluation over reports generated weekly from operation company to admin and in need company.
+منصة تنفيذ أعمال تربط بين الشركات العارضة للمشاريع و والشركات المنفذة لها ، و تقدم خدمة الاعمال المشتركة 
+كـ مثال : شركة حصلت على مشروع ضخم في السوق لا يمكن بأن تعمل بمفردها في السوق وانما تحتاج توزيع المهام للشركات التنفيذية وتشغل الاعمال التي تقوم فيها وتقدمها بـ (جودة عالية ) وبالوقت المتفق عليه. 
+ومن خلالها يتم تخريج شركات تنفيذية جديدة بالسوق وتزرع حس المنافسة بالاعمال والمشاريع و الجودة.	
+تساعد في تشغيل الشركات التنفيذية والمشاريع وتحريك عجلة التنمية وربط جميع الشركات مع بعضها تحت منصة وحده وبحسب إحتياجات السوق.
+ومنها يوجد شركات تمويليه للمشاريع وتسهيل اجاراءات تنفيذ العمل.
+في منصة (تنفيذ اعمال) تسجل الشركات التنفيذية ، وبعد مراجعة خبراتها ومؤهلاتها تقبل بالمنصة وتتكسب الميزات التالية:
+1-ارسال طلبات وتفاوض مع شركات عارضة للمشاريع.
+2- ارسال تقارير دورية عن تقدم المشروع للشركة العارضة لحفظ الحقوق بين الطرفين.
+ 3-نظام ادارة عمال واسناد عمال الى مشروع. 
+مميزات الشركة العارضة:
+1- عرض مشاريعها للشركات التنفيذية.
+2- ارسال طلبات وتفاوض مع الشركة المنفذة .
+3- الاطلاع على التقارير المرسلة من الشركة التنفيذية.
+4- تقييم الشركات التنفيذية.
 
 
 The system was developed entirely using Java language and Spring Boot framework REST API, The database is: postgresql pgadmin.
