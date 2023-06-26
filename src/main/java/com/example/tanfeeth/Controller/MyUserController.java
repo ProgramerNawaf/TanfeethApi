@@ -1,5 +1,6 @@
 package com.example.tanfeeth.Controller;
 
+import com.example.tanfeeth.Config.AuthenticationResponse;
 import com.example.tanfeeth.DTO.InNeedCompanyDTO;
 import com.example.tanfeeth.DTO.OperationCompanyDTO;
 import com.example.tanfeeth.Model.MyUser;
@@ -20,14 +21,14 @@ public class MyUserController {
     private final MyUserService myUserService;
 
     @PostMapping("/register/in-need-company")
-    public ResponseEntity registerInNeedCompany(@Valid @RequestBody InNeedCompanyDTO inNeedCompany) {
-        myUserService.registerInNeedCompany(inNeedCompany);
-        return ResponseEntity.status(200).body("registered InNeed Company!");
+    public ResponseEntity<AuthenticationResponse> registerInNeedCompany(@Valid @RequestBody InNeedCompanyDTO inNeedCompany) {
+
+        return ResponseEntity.status(200).body(myUserService.registerInNeedCompany(inNeedCompany));
     }
     @PostMapping("/register/operation-company")
-    public ResponseEntity registerOperationCompany(@Valid @RequestBody OperationCompanyDTO operationCompany) {
-        myUserService.registerOperationCompany(operationCompany);
-        return ResponseEntity.status(200).body("registered Operation Company");
+    public ResponseEntity<AuthenticationResponse> registerOperationCompany(@Valid @RequestBody OperationCompanyDTO operationCompany) {
+
+        return ResponseEntity.status(200).body(myUserService.registerOperationCompany(operationCompany));
     }
 
 

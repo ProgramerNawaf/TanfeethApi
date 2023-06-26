@@ -3,14 +3,19 @@ package com.example.tanfeeth.Config;
 
 import com.example.tanfeeth.Service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SpringConfiguration {
 
     private final MyUserDetailsService myUserDetailsService;
-
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
@@ -27,22 +32,20 @@ public class SpringConfiguration {
         authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return authenticationProvider;
     }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
-//        daoAuthenticationProvider.setUserDetailsService(myUserDetailsService);
-//        daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-//        return daoAuthenticationProvider;
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
                 .requestMatchers("api/v1/admin/**").permitAll()// admin
                 .requestMatchers("/api/v1/account/register/**").permitAll()
@@ -76,10 +79,12 @@ public class SpringConfiguration {
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/account/logout")
-                .deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true)
-                .and()
-                .httpBasic();
+//                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+//                .deleteCookies("JSESSIONID")
+//                .invalidateHttpSession(true)
+//                .and()
+//                .httpBasic();
         return http.build();
     }
 }
