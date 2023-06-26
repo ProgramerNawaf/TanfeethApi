@@ -1,6 +1,7 @@
 package com.example.tanfeeth.Service;
 
 
+import com.example.tanfeeth.Config.AuthenticationResponse;
 import com.example.tanfeeth.DTO.InNeedCompanyDTO;
 import com.example.tanfeeth.Model.InNeedCompany;
 import com.example.tanfeeth.Model.MyUser;
@@ -15,8 +16,9 @@ public class AdminService {
 
     private final MyUserRepositroy myUserRepositroy;
     private final MyUserService myUserService;
+    private final MyUserDetailsService myUserDetailsService;
 
-    public void register(MyUser user){
+    public AuthenticationResponse register(MyUser user){
         String hash = new BCryptPasswordEncoder().encode(user.getPassword());
         MyUser admin = new MyUser(
                 null,user.getEmail(),
@@ -28,7 +30,9 @@ public class AdminService {
                 null);
 
         myUserRepositroy.save(admin);
-
+        var jwtToken = myUserDetailsService.generateJwtToken(admin);
+//                var refreshToken = myUserDetailsService.generateRefreshToken(userInNeedCompany);
+        return new AuthenticationResponse(jwtToken);
     }
 
     public void handleCompany(boolean decision , Integer companyId){

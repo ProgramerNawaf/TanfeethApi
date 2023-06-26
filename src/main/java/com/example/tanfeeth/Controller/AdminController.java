@@ -1,6 +1,7 @@
 package com.example.tanfeeth.Controller;
 
 
+import com.example.tanfeeth.Config.AuthenticationResponse;
 import com.example.tanfeeth.Model.*;
 import com.example.tanfeeth.Repository.MyUserRepositroy;
 import com.example.tanfeeth.Service.*;
@@ -84,9 +85,9 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerAdmin(@RequestBody MyUser admin) {
-        adminService.register(admin);
-        return ResponseEntity.status(200).body("Admin added!");
+    public ResponseEntity<AuthenticationResponse> registerAdmin(@RequestBody MyUser admin) {
+        ;
+        return ResponseEntity.status(200).body(adminService.register(admin));
     }
 
     @GetMapping("/get-all-report")

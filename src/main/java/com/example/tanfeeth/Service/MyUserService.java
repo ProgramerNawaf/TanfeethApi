@@ -1,5 +1,6 @@
 package com.example.tanfeeth.Service;
 
+import com.example.tanfeeth.Config.AuthenticationResponse;
 import com.example.tanfeeth.DTO.InNeedCompanyDTO;
 import com.example.tanfeeth.DTO.OperationCompanyDTO;
 import com.example.tanfeeth.Model.*;
@@ -20,12 +21,13 @@ public class MyUserService {
     private final ProjectRepository projectRepository;
     private final StaffRepository staffRepository;
     private final RequestRepository requestRepository;
+    private final MyUserDetailsService myUserDetailsService;
 
     public List<MyUser> getAllUser(){
         return myUserRepositroy.findAll();
     }
 
-    public void registerInNeedCompany(InNeedCompanyDTO inNeedCompanyDTO){
+    public AuthenticationResponse registerInNeedCompany(InNeedCompanyDTO inNeedCompanyDTO){
         String hash = new BCryptPasswordEncoder().encode(inNeedCompanyDTO.getPassword());
         MyUser userInNeedCompany = new MyUser(
                 null,inNeedCompanyDTO.getEmail(),
@@ -47,9 +49,13 @@ public class MyUserService {
         userInNeedCompany.setInNeedCompany(inNeedCompany);
         myUserRepositroy.save(userInNeedCompany);
         inNeedCompanyRepository.save(inNeedCompany);
+        var jwtToken = myUserDetailsService.generateJwtToken(userInNeedCompany);
+//                var refreshToken = myUserDetailsService.generateRefreshToken(userInNeedCompany);
+        return new AuthenticationResponse(jwtToken);
+
     }
 
-    public void registerOperationCompany(OperationCompanyDTO operationCompanyDTO){
+    public AuthenticationResponse registerOperationCompany(OperationCompanyDTO operationCompanyDTO){
         String hash = new BCryptPasswordEncoder().encode(operationCompanyDTO.getPassword());
         MyUser userOperationCompany = new MyUser(
                 null,
@@ -77,7 +83,9 @@ public class MyUserService {
 
         myUserRepositroy.save(userOperationCompany);
         operationCompanyRepository.save(operationCompany);
-
+        var jwtToken = myUserDetailsService.generateJwtToken(userOperationCompany);
+//                var refreshToken = myUserDetailsService.generateRefreshToken(userInNeedCompany);
+        return new AuthenticationResponse(jwtToken);
     }
 
 
