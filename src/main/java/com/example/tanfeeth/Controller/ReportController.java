@@ -23,7 +23,7 @@ public class ReportController {
     @PostMapping("/add/{idProject}")
     public ResponseEntity addReport(@AuthenticationPrincipal MyUser myUser, @PathVariable Integer idProject, @RequestBody Report report){
         reportService.addReport(myUser.getId(),idProject,report);
-        return ResponseEntity.status(200).body("done add report !");
+        return ResponseEntity.status(200).body("Report Added!");
     }
 
     @GetMapping("/get/{idProject}")
